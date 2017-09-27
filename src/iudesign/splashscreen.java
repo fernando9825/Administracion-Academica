@@ -137,7 +137,7 @@ public class splashscreen extends javax.swing.JFrame implements Runnable {
 
     @Override
     public void run() {
-        while (tiempo!= null) {
+       /* while (tiempo!= null) {
             try {
                 Thread.sleep(9500);
                 this.dispose();
@@ -148,5 +148,18 @@ public class splashscreen extends javax.swing.JFrame implements Runnable {
             }
         }
         tiempo = null;
+        */
+       
+       
+            try {
+                Thread.sleep(9500);
+                this.dispose();
+                new loginn().setVisible(true);
+                Thread.sleep(50000);
+            } catch (InterruptedException ex) {
+                java.util.logging.Logger.getLogger(splashscreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+       
     }
+    
 }

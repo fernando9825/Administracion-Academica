@@ -5,6 +5,9 @@
  */
 package iudesign;
 
+import Clases.conectarBD;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author m98am
@@ -41,8 +44,8 @@ public class loginn extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        textFieldUsuario = new javax.swing.JTextField();
+        textFieldPassword = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -130,18 +133,18 @@ public class loginn extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(240, 240, 240));
         jLabel6.setText("CONTRASEÑA");
 
-        jTextField1.setBackground(new java.awt.Color(9, 9, 62));
-        jTextField1.setForeground(new java.awt.Color(240, 240, 240));
-        jTextField1.setBorder(null);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        textFieldUsuario.setBackground(new java.awt.Color(9, 9, 62));
+        textFieldUsuario.setForeground(new java.awt.Color(240, 240, 240));
+        textFieldUsuario.setBorder(null);
+        textFieldUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                textFieldUsuarioActionPerformed(evt);
             }
         });
 
-        jPasswordField1.setBackground(new java.awt.Color(9, 9, 62));
-        jPasswordField1.setForeground(new java.awt.Color(240, 240, 240));
-        jPasswordField1.setBorder(null);
+        textFieldPassword.setBackground(new java.awt.Color(9, 9, 62));
+        textFieldPassword.setForeground(new java.awt.Color(240, 240, 240));
+        textFieldPassword.setBorder(null);
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(240, 240, 240));
@@ -171,8 +174,8 @@ public class loginn extends javax.swing.JFrame {
                 .addGap(50, 50, 50)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textFieldUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -201,13 +204,13 @@ public class loginn extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(32, 32, 32)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textFieldUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(jLabel6)
                 .addGap(30, 30, 30)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(textFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(90, 90, 90)
@@ -221,24 +224,46 @@ public class loginn extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+       //BOTÓN INGRESAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.dispose();
+
+        /*
+            Código que debo refinar, mientras solo dejaré que acceda presionando el botón
+            String usuario, password;
+        usuario = (textFieldUsuario.getText());
+        password = (textFieldPassword.getText());
+        JOptionPane.showMessageDialog(this, usuario + "\n" + password);
+        conectarBD con = new conectarBD();
+        con.IniciarSesion(usuario, password);
+        JOptionPane.showMessageDialog(this, usuario + "\n" + password);
+        JOptionPane.showMessageDialog(this, con.usuarioBD + "\n" + con.passwordBD);
+        if(usuario.equalsIgnoreCase(con.usuarioBD) && password.equals(con.passwordBD)){
+            this.dispose();
+            new menú().setVisible(true);
+        }
+         */
+ /* if(usuario.equals("fer")){
+            if(password.equals("123")){
+                this.dispose();
                 new menú().setVisible(true);
-        // TODO add your handling code here:
+            }
+        }
+         */
+        this.dispose();
+        new menú().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void textFieldUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
- 
+    }//GEN-LAST:event_textFieldUsuarioActionPerformed
+
     private void jPanel2ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel2ComponentShown
-     
+
 // TODO add your handling code here:
     }//GEN-LAST:event_jPanel2ComponentShown
-
+    //BOTÓN REGISTRARSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       this.dispose();
+        this.dispose();
         new registrarse().setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -253,23 +278,23 @@ public class loginn extends javax.swing.JFrame {
         this.setExtendedState(1);
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel17MouseClicked
-int xy,xx; 
+    int xy, xx;
     private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
-         int x= evt.getXOnScreen(); 
-        int y= evt.getYOnScreen(); 
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
         this.setLocation(x - xx, y - xy);
- // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_jPanel2MouseDragged
 
     private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
-        setOpacity ((float)0.8); 
-          xx= evt.getX(); 
-        xy= evt.getY(); 
+        setOpacity((float) 0.8);
+        xx = evt.getX();
+        xy = evt.getY();
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel2MousePressed
 
     private void jPanel2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseReleased
-        setOpacity ((float)1.0); 
+        setOpacity((float) 1.0);
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel2MouseReleased
 
@@ -321,11 +346,11 @@ int xy,xx;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField textFieldPassword;
+    private javax.swing.JTextField textFieldUsuario;
     // End of variables declaration//GEN-END:variables
 }
