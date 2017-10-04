@@ -14,9 +14,15 @@ public class matricula extends javax.swing.JFrame {
     /**
      * Creates new form matricula
      */
-    public matricula() {
+    
+    private static String fullName, materia;
+    public matricula(String fullName, String materia) {
         initComponents();
         setLocationRelativeTo(null);
+        
+        //Dandole valor a las variables globales
+        this.fullName = fullName;
+        this.materia = materia;
     }
 
     /**
@@ -28,7 +34,7 @@ public class matricula extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel8 = new javax.swing.JLabel();
+        btnAtras = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -53,14 +59,14 @@ public class matricula extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Go Back_32px.png"))); // NOI18N
-        jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Go Back_32px.png"))); // NOI18N
+        btnAtras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAtras.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
+                btnAtrasMouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+        getContentPane().add(btnAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(0, 51, 51));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 240, 240), 2));
@@ -163,26 +169,21 @@ int xy, xx;
 
     private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
         setOpacity ((float)0.8); 
-          xx= evt.getX(); 
+        xx= evt.getX(); 
         xy= evt.getY(); 
- // TODO add your handling code here:
     }//GEN-LAST:event_jPanel2MousePressed
 
     private void jPanel2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseReleased
        setOpacity ((float)1.0); 
-        // TODO add your handling code here:
     }//GEN-LAST:event_jPanel2MouseReleased
 
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+    private void btnAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAtrasMouseClicked
         this.dispose();
-        new menú().setVisible(true);
-        
-// TODO add your handling code here:
-    }//GEN-LAST:event_jLabel8MouseClicked
+        new menú(fullName, materia).setVisible(true);
+    }//GEN-LAST:event_btnAtrasMouseClicked
 
     private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
         this.setExtendedState(1);
-        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel17MouseClicked
 
     /**
@@ -215,12 +216,13 @@ int xy, xx;
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new matricula().setVisible(true);
+                new matricula(fullName, materia).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnAtras;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
@@ -232,7 +234,6 @@ int xy, xx;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollBar jScrollBar1;

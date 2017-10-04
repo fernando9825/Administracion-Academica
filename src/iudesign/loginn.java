@@ -48,10 +48,9 @@ public class loginn extends javax.swing.JFrame {
                     //SE OCULTA EL LOGIN
                     this.setVisible(false);
                     //SE ABRE EL MENÚ
-                    new menú().setVisible(true);
-                    //AQUI SE PASAN ALGUNAS VARIABLES AL MENÚ
-                    menú.JlabelFullName.setText(fullName);
-                    menú.jLabelmateria.setText(materia);
+                    new menú(fullName, materia).setVisible(true); 
+                    //SE CIERRA EL Login
+                    this.dispose();
 
                 } else {
                     //JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña incorrectos y/o no existe.");
@@ -320,7 +319,6 @@ public class loginn extends javax.swing.JFrame {
     private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed
         this.dispose();
         new registrarse().setVisible(true);
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnRegistrarseActionPerformed
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
