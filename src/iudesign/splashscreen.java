@@ -5,9 +5,12 @@
  */
 package iudesign;
 
-
 import com.sun.awt.AWTUtilities;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,7 +18,8 @@ import java.util.logging.Level;
  */
 public class splashscreen extends javax.swing.JFrame implements Runnable {
 
-    private Thread tiempo= null;
+    private Thread tiempo = null;
+
     /**
      * Creates new form splashscreen
      */
@@ -23,9 +27,9 @@ public class splashscreen extends javax.swing.JFrame implements Runnable {
         initComponents();
         setLocationRelativeTo(null);
         AWTUtilities.setWindowOpaque(this, false);
-        tiempo = new Thread(this); 
+        tiempo = new Thread(this);
         tiempo.start();
-        
+
     }
 
     /**
@@ -137,7 +141,7 @@ public class splashscreen extends javax.swing.JFrame implements Runnable {
 
     @Override
     public void run() {
-       /* while (tiempo!= null) {
+        /*
             try {
                 Thread.sleep(9500);
                 this.dispose();
@@ -146,20 +150,29 @@ public class splashscreen extends javax.swing.JFrame implements Runnable {
             } catch (InterruptedException ex) {
                 java.util.logging.Logger.getLogger(splashscreen.class.getName()).log(Level.SEVERE, null, ex);
             }
+         */
+
+        try {
+            String dirWeb = "www.google.com";
+            int puerto = 80;
+            Socket s = new Socket(dirWeb, puerto);
+            if (s.isConnected()) {
+                Thread.sleep(1000);
+                this.dispose();
+                new loginn().setVisible(true);
+                System.out.println("Conexión establecida con la dirección: " + dirWeb + " a travéz del puerto: " + puerto);
+            } else {
+                JOptionPane.showMessageDialog(this, "Este programa precisa de una conexión "
+                        + "a internet para poder funcionar\nPor favor revise su conexión a internet y vuelva a intentarlo.", "Información", 0);
+            }
+        } catch (InterruptedException ex) {
+            java.util.logging.Logger.getLogger(splashscreen.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(splashscreen.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Este programa precisa de una conexión "
+                        + "a internet para poder funcionar\nPor favor revise su conexión a internet y vuelva a intentarlo.", "Información", 0);
+            System.exit(0);
         }
-        tiempo = null;
-        */
-       
-       
-            try {
-                Thread.sleep(9500);
-                this.dispose();
-                new loginn().setVisible(true);
-                Thread.sleep(50000);
-            } catch (InterruptedException ex) {
-                java.util.logging.Logger.getLogger(splashscreen.class.getName()).log(Level.SEVERE, null, ex);
-            }
-       
     }
-    
+
 }

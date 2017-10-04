@@ -16,6 +16,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,70 +25,72 @@ import java.sql.Statement;
  */
 public class conectarBD {
 
-    private static Connection conectar;
-    private static final String driver = "com.mysql.jdbc.Driver";
-    private static final String user = "a2b143_fer9825";
-    private static final String password = "982505va";
-    private static final String server = "jdbc:mysql://mysql5005.smarterasp.net/db_a2b143_fer9825";
-    
+    Connection con;
+    Statement stm;
+    //LOCALHOST//private static String driver = "jdbc:mysql://localhost/admin_academica?user=root&password=";
+    private static String servidor = "mysql5005.smarterasp.net";
+    private static String baseDeDatos = "db_a2b143_fer9825";
+    private static String usuarioCon = "a2b143_fer9825";
+    private static String passwordCon = "982505va";
+    private static String driver = "jdbc:mysql://" + servidor + "/" + baseDeDatos
+            + "?user=" + usuarioCon + "&password=" + passwordCon;
+
     //Variables publicas para manejar el inicio de sesión
-    public String usuarioBD, passwordBD, fullname, correo;
+    public String usuarioBD, passwordBD, fullname, correo, materia;
 
     public conectarBD() {
-        conectar = null;
-
-        try {
-            Class.forName(server);
-            conectar = DriverManager.getConnection(server, user, password);
-            if (conectar != null) {
-                System.out.println("Conexión establecida con la BD");
-            } else {
-                System.out.println("No se pudo conectar a la BD");
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-
-        }
-
+        //CONSTRUCTOR DE LA CLASE
+        abrirConexion();
     }
 
-    //Este metodo retorna la conexion
-    public Connection Conectar() {
-        return conectar;
+    //Con este metodo nos conectamos y retorna la conexion.
+    public boolean abrirConexion() {
+        boolean conex = false;
+        try {
+
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection(driver);
+            if (con != null) {
+                conex = true;
+            }
+
+            stm = con.createStatement();
+            //ResultSet rs = stm.executeQuery("select * from maestros");
+
+        } catch (ClassNotFoundException exc) {
+            exc.printStackTrace();
+        } catch (SQLException ex) {
+            Logger.getLogger(conectarBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return conex;
     }
 
     //Con este método cerramos la conexion
-    public void Desconectar() {
-        conectar = null;
-        if (conectar == null) {
-            System.out.println("Conexion cerrada");
-        }
+    public void cerrarConexion() {
+            con = null;
     }
 
     public void IniciarSesion(String usuario, String password) {
+
         String query = "SELECT * FROM maestros WHERE usuario = '" + usuario + "'";
-        Connection con = Conectar();
+        if (abrirConexion()) {
+            try {
+                ResultSet result = stm.executeQuery(query);
+                while (result.next()) {
+                    usuarioBD = result.getString("usuario");
+                    passwordBD = result.getString("password");
+                    fullname = result.getString("nombre") + " " + result.getString("apellido");
+                    materia = result.getString("materia");
+                    //String email = result.getString("email");
 
-        try {
-            Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery(query);
-
-            int count = 0;
-
-            while (result.next()) {
-                 usuarioBD = result.getString("usuario");
-                 passwordBD = result.getString("password");
-                 fullname = result.getString("nombre") + " " + result.getString("apellido");
-                //String email = result.getString("email");
-
-                //String output = "User #%d: %s - %s - %s - %s";
-                //System.out.println(String.format(output, ++count, usuarioBD, passwordBD, fullname, email));
+                    //String output = "User #%d: %s - %s - %s - %s";
+                    //System.out.println(String.format(output, ++count, usuarioBD, passwordBD, fullname, email));
+                }
+            } catch (SQLException e) {
             }
-        } catch (SQLException e) {
+            cerrarConexion();
         }
 
     }
 
 }
-
-
-
