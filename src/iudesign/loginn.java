@@ -27,26 +27,25 @@ public class loginn extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
     }
-    
-    private void log_in(){
-        
+
+    private void log_in() {
+
         labelsesion.setText("Espere...");
         String usuario, password;
         usuario = (textFieldUsuario.getText());
         password = (textFieldPassword.getText());
 
         if (!(usuario.isEmpty()) && !(password.isEmpty())) {
-            
+
             //INICIAR SESIÓN
             conectarBD con = new conectarBD();
-           
+
             if (con.abrirConexion()) {
                 con.IniciarSesion(usuario, password);
                 if (usuario.equalsIgnoreCase(con.usuarioBD) && password.equals(con.passwordBD)) {
                     fullName = con.fullname;
                     usuarioBD = con.usuarioBD;
                     materia = con.materia;
-                    
 
                     //SE OCULTA EL LOGIN
                     this.setVisible(false);
@@ -324,7 +323,10 @@ public class loginn extends javax.swing.JFrame {
     //BOTÓN REGISTRARSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed
         this.dispose();
-        new registrarse().setVisible(true);
+        SimpleFactory simpleFactory = new SimpleFactory();
+        simpleFactory.constructorObjetos(3); //Registrarse
+        simpleFactory = null;
+        //new registrarse().setVisible(true);
     }//GEN-LAST:event_btnRegistrarseActionPerformed
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked

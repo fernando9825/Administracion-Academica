@@ -402,9 +402,9 @@ public class menú extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMatricularAlumnoActionPerformed
 
     private void brnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnCerrarSesionActionPerformed
-        //Abrir nueva ventana, sin cerrar el menú
-        this.setVisible(false);
-        new loginn().setVisible(true);
+        SimpleFactory simpleFactory = new SimpleFactory();
+        simpleFactory.constructorObjetos(2); //Login
+        simpleFactory = null;
     }//GEN-LAST:event_brnCerrarSesionActionPerformed
 
     private void BtnCerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCerrarMouseClicked

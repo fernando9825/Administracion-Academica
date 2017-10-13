@@ -28,6 +28,10 @@ public class SimpleFactory {
                 new loginn().setVisible(true); //Para mostrar el login
                 break;
             }
+            case 3: {
+                new registrarse().setVisible(true); //Para mostrar el formulario de registro
+                break;
+            }
             default: {
                 System.out.println("Ocurrio un error en la creación de objetos");
                 break;

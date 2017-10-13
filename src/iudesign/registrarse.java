@@ -6,6 +6,7 @@
 package iudesign;
 
 import Clases.ComprobarConexionInternet;
+import Clases.SimpleFactory;
 import static com.sun.javafx.tk.Toolkit.getToolkit;
 import javax.swing.JOptionPane;
 
@@ -362,16 +363,16 @@ public class registrarse extends javax.swing.JFrame {
             if (!(txtNombre.getText().isEmpty()) && !(txtApellido.getText().isEmpty())
                     && !(txtPassword.getText().isEmpty()) && !(txtCorreo.getText().isEmpty())
                     && !(txtCorreoConfirm.getText().isEmpty()) && !(txtPasswordConfirm.getText().isEmpty())) {
-                            //SI NO ESTAN VACIOS, LAS VARIABLES SE ENVIAN
-                            nombre = (txtNombre.getText());
-                            apellido = (txtApellido.getText());
-                            correo = (txtCorreo.getText());
-                            contraseña = (txtPassword.getText());
-                            fullName = nombre + " " + apellido;
-                            new menú(fullName, correo).setVisible(true);
+                //SI NO ESTAN VACIOS, LAS VARIABLES SE ENVIAN
+                nombre = (txtNombre.getText());
+                apellido = (txtApellido.getText());
+                correo = (txtCorreo.getText());
+                contraseña = (txtPassword.getText());
+                fullName = nombre + " " + apellido;
+                new menú(fullName, correo).setVisible(true);
 
-                            //Cerrar REGISTRAR
-                            this.dispose();
+                //Cerrar REGISTRAR
+                this.dispose();
             } else {
 
                 //AQUI SE COMPRUEBA si cada campo tiene algun valor
@@ -434,7 +435,9 @@ public class registrarse extends javax.swing.JFrame {
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         this.dispose();
-        new loginn().setVisible(true);
+        SimpleFactory simpleFactory = new SimpleFactory();
+        simpleFactory.constructorObjetos(2); //Login
+        simpleFactory = null;
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked
@@ -456,7 +459,7 @@ public class registrarse extends javax.swing.JFrame {
     //VALIDANDO QUE EL USUARIO INGRESE SÓLO LETRAS
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         char C = evt.getKeyChar();
-        if (Character.isDigit(C) || ((int) evt.getKeyChar() > 32 && (int) evt.getKeyChar() <= 47 
+        if (Character.isDigit(C) || ((int) evt.getKeyChar() > 32 && (int) evt.getKeyChar() <= 47
                 || (int) evt.getKeyChar() >= 58 && (int) evt.getKeyChar() <= 64
                 || (int) evt.getKeyChar() >= 91 && (int) evt.getKeyChar() <= 96
                 || (int) evt.getKeyChar() >= 123 && (int) evt.getKeyChar() <= 129
@@ -471,7 +474,7 @@ public class registrarse extends javax.swing.JFrame {
 
     private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
         char C = evt.getKeyChar();
-        if (Character.isDigit(C) || ((int) evt.getKeyChar() > 32 && (int) evt.getKeyChar() <= 47 
+        if (Character.isDigit(C) || ((int) evt.getKeyChar() > 32 && (int) evt.getKeyChar() <= 47
                 || (int) evt.getKeyChar() >= 58 && (int) evt.getKeyChar() <= 64
                 || (int) evt.getKeyChar() >= 91 && (int) evt.getKeyChar() <= 96
                 || (int) evt.getKeyChar() >= 123 && (int) evt.getKeyChar() <= 129
