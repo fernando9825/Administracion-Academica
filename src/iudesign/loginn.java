@@ -5,6 +5,7 @@
  */
 package iudesign;
 
+import Clases.SimpleFactory;
 import Clases.conectarBD;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -28,6 +29,7 @@ public class loginn extends javax.swing.JFrame {
     }
     
     private void log_in(){
+        
         labelsesion.setText("Espere...");
         String usuario, password;
         usuario = (textFieldUsuario.getText());
@@ -44,11 +46,15 @@ public class loginn extends javax.swing.JFrame {
                     fullName = con.fullname;
                     usuarioBD = con.usuarioBD;
                     materia = con.materia;
+                    
 
                     //SE OCULTA EL LOGIN
                     this.setVisible(false);
                     //SE ABRE EL MENÚ
-                    new menú(fullName, materia).setVisible(true); 
+                    //SimpleFactory simpleFactory = new SimpleFactory();
+                    //simpleFactory.constructorObjetosVariables(1, fullName, materia);
+                    //simpleFactory = null;
+                    new menú(fullName, materia).setVisible(true);
                     //SE CIERRA EL Login
                     this.dispose();
 

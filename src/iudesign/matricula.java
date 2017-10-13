@@ -5,6 +5,8 @@
  */
 package iudesign;
 
+import Clases.SimpleFactory;
+
 /**
  *
  * @author m98am
@@ -179,7 +181,10 @@ int xy, xx;
 
     private void btnAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAtrasMouseClicked
         this.dispose();
-        new menú(fullName, materia).setVisible(true);
+        SimpleFactory simpleFactory = new SimpleFactory();
+        simpleFactory.constructorObjetosVariables(1, fullName, materia);
+        simpleFactory = null;
+        //new menú(fullName, materia).setVisible(true);
     }//GEN-LAST:event_btnAtrasMouseClicked
 
     private void jLabel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MouseClicked

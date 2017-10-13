@@ -5,6 +5,7 @@
  */
 package iudesign;
 
+import Clases.SimpleFactory;
 import com.sun.awt.AWTUtilities;
 import java.io.IOException;
 import java.net.Socket;
@@ -151,15 +152,16 @@ public class splashscreen extends javax.swing.JFrame implements Runnable {
                 java.util.logging.Logger.getLogger(splashscreen.class.getName()).log(Level.SEVERE, null, ex);
             }
          */
-
+        SimpleFactory simpleFactory = new SimpleFactory();
         try {
             String dirWeb = "www.google.com";
             int puerto = 80;
             Socket s = new Socket(dirWeb, puerto);
             if (s.isConnected()) {
                 Thread.sleep(1000);
+                simpleFactory.constructorObjetos(2); //Login
+                simpleFactory = null;
                 this.dispose();
-                new loginn().setVisible(true);
                 System.out.println("Conexión establecida con la dirección: " + dirWeb + " a travéz del puerto: " + puerto);
             } else {
                 JOptionPane.showMessageDialog(this, "Este programa precisa de una conexión "
