@@ -405,6 +405,7 @@ public class menú extends javax.swing.JFrame {
         SimpleFactory simpleFactory = new SimpleFactory();
         simpleFactory.constructorObjetos(2); //Login
         simpleFactory = null;
+        this.dispose();
     }//GEN-LAST:event_brnCerrarSesionActionPerformed
 
     private void BtnCerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCerrarMouseClicked

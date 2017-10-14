@@ -7,6 +7,7 @@ package iudesign;
 
 import Clases.ComprobarConexionInternet;
 import Clases.SimpleFactory;
+import Clases.conectarBD;
 import static com.sun.javafx.tk.Toolkit.getToolkit;
 import javax.swing.JOptionPane;
 
@@ -19,7 +20,7 @@ public class registrarse extends javax.swing.JFrame {
     /**
      * Creates new form registrarse
      */
-    private static String nombre, apellido, correo, contraseña, fullName;
+    private static String nombre, apellido, correo, correoVerificar, contraseña, contraseñaVerificar, fullName, materia;
 
     public registrarse() {
         initComponents();
@@ -367,12 +368,37 @@ public class registrarse extends javax.swing.JFrame {
                 nombre = (txtNombre.getText());
                 apellido = (txtApellido.getText());
                 correo = (txtCorreo.getText());
+                correoVerificar = (txtCorreoConfirm.getText());
                 contraseña = (txtPassword.getText());
+                contraseñaVerificar = (txtPasswordConfirm.getText());
                 fullName = nombre + " " + apellido;
-                new menú(fullName, correo).setVisible(true);
+                materia = "asdasd";
 
-                //Cerrar REGISTRAR
-                this.dispose();
+                //Aqui se ingresa el nuevo maestro a la BD Online
+                if (correo.equalsIgnoreCase(correoVerificar)) {
+                    if (contraseña.equals(contraseñaVerificar)) {
+                        //Creando una instancia de la clase conectarBD para la inserción
+                        conectarBD bd = new conectarBD();
+
+                        //SIMPLE FACTORY
+                        //Abrir el menú una vez que se ha registrado en la BD
+                        if (bd.RegistrarMaestro(correo, nombre, apellido, contraseña, materia)) {
+                            SimpleFactory simpleFactory = new SimpleFactory();
+                            simpleFactory.constructorObjetosVariables(1, fullName, correo);
+                            simpleFactory = null;
+                            //Cerrar REGISTRAR
+                            this.dispose();
+                        }else{
+                            JOptionPane.showMessageDialog(this, "Algo salió mal,"
+                                    + " revise su conexión a internet y vuelva a interntarlo", "Información", 0);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Los campos de contraseña no coinciden", "Información", 0);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Los campos de correo no coinciden", "Información", 0);
+                }
+                
             } else {
 
                 //AQUI SE COMPRUEBA si cada campo tiene algun valor

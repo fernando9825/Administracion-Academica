@@ -13,6 +13,7 @@ package Clases;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,6 +28,7 @@ public class conectarBD {
 
     Connection con;
     Statement stm;
+    Statement st;
     //LOCALHOST//private static String driver = "jdbc:mysql://localhost/admin_academica?user=root&password=";
     private static String servidor = "mysql5005.smarterasp.net";
     private static String baseDeDatos = "db_a2b143_fer9825";
@@ -55,6 +57,7 @@ public class conectarBD {
             }
 
             stm = con.createStatement();
+            st = (Statement) con.createStatement();
             //ResultSet rs = stm.executeQuery("select * from maestros");
 
         } catch (ClassNotFoundException exc) {
@@ -67,17 +70,17 @@ public class conectarBD {
 
     //Con este método cerramos la conexion
     public void cerrarConexion() {
-            con = null;
+        con = null;
     }
 
     public void IniciarSesion(String usuario, String password) {
 
-        String query = "SELECT * FROM maestros WHERE usuario = '" + usuario + "'";
+        String query = "SELECT * FROM maestros WHERE correo = '" + usuario + "'";
         if (abrirConexion()) {
             try {
                 ResultSet result = stm.executeQuery(query);
                 while (result.next()) {
-                    usuarioBD = result.getString("usuario");
+                    usuarioBD = result.getString("correo");
                     passwordBD = result.getString("password");
                     fullname = result.getString("nombre") + " " + result.getString("apellido");
                     materia = result.getString("materia");
@@ -91,6 +94,26 @@ public class conectarBD {
             cerrarConexion();
         }
 
+    }
+
+    public boolean RegistrarMaestro(String correo, String nombre, String apellido, String passWord, String materia) {
+        boolean ingresado = false;
+        if (abrirConexion()) {
+            try {
+                // the mysql insert statement
+                String query = "INSERT INTO maestros(correo, nombre, apellido, password, materia) VALUES ('"+correo + "', '" + nombre + "', '" + apellido + "', '" + passWord + "', '" + materia +"')";
+                
+                st.executeUpdate(query);
+                //Cerrar la conexion
+                cerrarConexion();
+                ingresado = true;
+            } catch (SQLException e) {
+                System.err.println("Ha ocurrido un problema, lo sentimos, vuelva a intentarlo");
+                System.err.println(e.getMessage());
+                ingresado = false;
+            }
+        }
+        return ingresado;
     }
 
 }
