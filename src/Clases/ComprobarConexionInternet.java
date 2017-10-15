@@ -30,7 +30,7 @@ public class ComprobarConexionInternet {
                 Socket s = new Socket(dirWeb, puerto);
                 if (s.isConnected()) {
                     System.out.println("Conexión establecida con la dirección: " + dirWeb + " a travéz del puerto: " + puerto);
-                    System.out.println("Por lo tanto la ejecución puede continuar");
+                    System.out.println("Por lo tanto la ejecución puede continuar\n");
                     conex = true;
                 }
             } catch (IOException ex) {
