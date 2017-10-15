@@ -29,6 +29,7 @@ public class registrarse extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         this.cbxOpcion.setVisible(false);
         this.cbxSeccion.setVisible(false);
+        this.cbxMateria.setVisible(false);
     }
 
     /**
@@ -68,6 +69,7 @@ public class registrarse extends javax.swing.JFrame {
         cbxYear = new javax.swing.JComboBox<>();
         cbxOpcion = new javax.swing.JComboBox<>();
         cbxSeccion = new javax.swing.JComboBox<>();
+        cbxMateria = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         btnRegistrar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -82,9 +84,24 @@ public class registrarse extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(0, 0, 51));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.setPreferredSize(new java.awt.Dimension(520, 550));
+        jPanel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel2MouseDragged(evt);
+            }
+        });
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel2MousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jPanel2MouseReleased(evt);
+            }
+        });
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setToolTipText("");
+        jScrollPane1.setVerifyInputWhenFocusTarget(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 51));
         jPanel1.setAutoscrolls(true);
@@ -96,6 +113,9 @@ public class registrarse extends javax.swing.JFrame {
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jPanel1MousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jPanel1MouseReleased(evt);
             }
         });
 
@@ -217,7 +237,7 @@ public class registrarse extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel10.setText("Año, opción y sección");
+        jLabel10.setText("Año, opción, sección y materia (Disponibles).");
 
         cbxYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elija año", "Primer año", "Segundo año", "Tercer año" }));
         cbxYear.addItemListener(new java.awt.event.ItemListener() {
@@ -239,6 +259,13 @@ public class registrarse extends javax.swing.JFrame {
         });
 
         cbxSeccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elija sección" }));
+        cbxSeccion.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxSeccionItemStateChanged(evt);
+            }
+        });
+
+        cbxMateria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elija materia" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -287,6 +314,10 @@ public class registrarse extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jToggleButton2)))))
                 .addGap(49, 49, 49))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cbxMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -338,7 +369,9 @@ public class registrarse extends javax.swing.JFrame {
                     .addComponent(cbxYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbxOpcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbxSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(cbxMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -415,7 +448,7 @@ public class registrarse extends javax.swing.JFrame {
                         .addGap(15, 15, 15)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -423,7 +456,7 @@ public class registrarse extends javax.swing.JFrame {
                 .addGap(26, 26, 26))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 560));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 630));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -652,7 +685,7 @@ public class registrarse extends javax.swing.JFrame {
     private void jToggleButton1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jToggleButton1ItemStateChanged
         if (jToggleButton1.isSelected()) {
             jToggleButton1.setText("Ocultar");
-             txtPassword.setEchoChar((char)0); //Mostrar la contraseña
+            txtPassword.setEchoChar((char) 0); //Mostrar la contraseña
         } else {
             jToggleButton1.setText("Mostrar");
             txtPassword.setEchoChar('*'); //Ocultar la contraseña
@@ -663,7 +696,7 @@ public class registrarse extends javax.swing.JFrame {
     private void jToggleButton2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jToggleButton2ItemStateChanged
         if (jToggleButton2.isSelected()) {
             jToggleButton2.setText("Ocultar");
-             txtPasswordConfirm.setEchoChar((char)0); //Mostrar la contraseña
+            txtPasswordConfirm.setEchoChar((char) 0); //Mostrar la contraseña
         } else {
             jToggleButton2.setText("Mostrar");
             txtPasswordConfirm.setEchoChar('*'); //Ocultar la contraseña
@@ -680,70 +713,171 @@ public class registrarse extends javax.swing.JFrame {
 
     //Esta parte del código, determina el valor del combobox seccion
     private void cbxYearItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxYearItemStateChanged
-        if(evt.getStateChange() == ItemEvent.SELECTED){
-            
-            if(this.cbxYear.getSelectedIndex() == 3){
-                this.cbxOpcion.setVisible(true);
-                this.cbxSeccion.setVisible(true);
-                this.cbxOpcion.setModel(new DefaultComboBoxModel(this.getOpcion(this.cbxYear.getSelectedItem().toString())));
-                this.cbxSeccion.setModel(new DefaultComboBoxModel(this.getSeccion("técnico")));
-            }else{
-                if(this.cbxYear.getSelectedIndex() > 0){
-                this.cbxOpcion.setVisible(true);
-                this.cbxSeccion.setVisible(false);
-                this.cbxOpcion.setModel(new DefaultComboBoxModel(this.getOpcion(this.cbxYear.getSelectedItem().toString())));
-            }
-            }
-            if(this.cbxYear.getSelectedIndex() == 0){
-                String[] valorNulo = new String[1];
-                valorNulo[0] = "nulo";
-                this.cbxOpcion.setVisible(false);
-                this.cbxSeccion.setVisible(false);
-                this.cbxOpcion.setModel(new DefaultComboBoxModel(valorNulo));
-                this.cbxSeccion.setModel(new DefaultComboBoxModel(valorNulo));
-                
-                //DE ESTO VOY A DETERMINAR SI PROCEDE O NO....... NO LO OLVIDES FERSITO...
-                
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+
+            try {
+                if (this.cbxYear.getSelectedIndex() == 3) {
+                    this.cbxOpcion.setVisible(true);
+                    this.cbxSeccion.setVisible(true);
+                    this.cbxMateria.setVisible(true);
+                    this.cbxOpcion.setModel(new DefaultComboBoxModel(this.getOpcion(this.cbxYear.getSelectedItem().toString())));
+                    this.cbxSeccion.setModel(new DefaultComboBoxModel(this.getSeccion("técnico")));
+                    this.cbxMateria.setModel(new DefaultComboBoxModel(this.getMateria("técnico")));
+
+                } else {
+                    if (this.cbxYear.getSelectedIndex() > 0) {
+                        this.cbxOpcion.setVisible(true);
+                        this.cbxSeccion.setVisible(false);
+                        this.cbxMateria.setVisible(false);
+                        this.cbxOpcion.setModel(new DefaultComboBoxModel(this.getOpcion(this.cbxYear.getSelectedItem().toString())));
+                    }
+                }
+                if (this.cbxYear.getSelectedItem().toString().equalsIgnoreCase("elija año")) {
+
+                    //Ocultando y vaciando comboboxes, para efectos de validación
+                    this.cbxOpcion.setVisible(false);
+                    this.cbxSeccion.setVisible(false);
+                    this.cbxMateria.setVisible(false);
+//                    this.cbxOpcion.removeAllItems();
+//                    this.cbxSeccion.removeAllItems();
+//                    this.cbxMateria.removeAllItems();
+
+                    //DE ESTO VOY A DETERMINAR SI PROCEDE O NO....... NO LO OLVIDES FERSITO...
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e, "Error", 0);
             }
         }
     }//GEN-LAST:event_cbxYearItemStateChanged
 
     private void cbxOpcionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxOpcionItemStateChanged
-         if(this.cbxOpcion.getSelectedIndex() > 0){
+
+        try {
+            if (this.cbxOpcion.getSelectedIndex() == 0) {
+                //Ocultando y vaciando los comboboxes, para efectos de validación
+                this.cbxSeccion.setVisible(false);
+                this.cbxMateria.setVisible(false);
+//                this.cbxSeccion.removeAllItems();
+//                this.cbxMateria.removeAllItems();
+            }
+
+            if (this.cbxOpcion.getSelectedIndex() > 0) {
                 this.cbxSeccion.setVisible(true);
                 this.cbxSeccion.setModel(new DefaultComboBoxModel(this.getSeccion(this.cbxOpcion.getSelectedItem().toString())));
+
+                if (this.cbxOpcion.getSelectedItem().toString().equalsIgnoreCase("general")) {
+                    this.cbxMateria.setModel(new DefaultComboBoxModel(this.getMateria("general")));
+                } else {
+                    this.cbxMateria.setVisible(false);
+                }
+
+                if (this.cbxOpcion.getSelectedItem().toString().equalsIgnoreCase("técnico")) {
+                    this.cbxMateria.setVisible(true);
+                    this.cbxMateria.setModel(new DefaultComboBoxModel(this.getMateria("técnico")));
+                }
             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e, "Error", 0);
+        }
+
     }//GEN-LAST:event_cbxOpcionItemStateChanged
 
-    public String[] getOpcion (String años){
+    private void cbxSeccionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxSeccionItemStateChanged
+
+        try {
+            if (this.cbxSeccion.getSelectedItem().toString().equalsIgnoreCase("elija sección")) {
+                this.cbxMateria.removeAllItems();
+                this.cbxMateria.setVisible(false);
+            } else {
+                this.cbxMateria.setModel(new DefaultComboBoxModel(this.getMateria(this.cbxOpcion.getSelectedItem().toString())));
+                this.cbxMateria.setVisible(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e, "Error", 0);
+        }
+
+
+    }//GEN-LAST:event_cbxSeccionItemStateChanged
+
+    private void jPanel1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseReleased
+        setOpacity((float) 1.0);
+    }//GEN-LAST:event_jPanel1MouseReleased
+
+    private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
+        setOpacity((float) 0.8);
+        xx = evt.getX();
+        xy = evt.getY();
+    }//GEN-LAST:event_jPanel2MousePressed
+
+    private void jPanel2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseReleased
+        setOpacity((float) 1.0);
+    }//GEN-LAST:event_jPanel2MouseReleased
+
+    private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xx, y - xy);
+    }//GEN-LAST:event_jPanel2MouseDragged
+
+    public String[] getOpcion(String años) {
         String[] opcion = new String[3];
-        if(años.equalsIgnoreCase("primer año") || años.equalsIgnoreCase("segundo año")){
+        if (años.equalsIgnoreCase("primer año") || años.equalsIgnoreCase("segundo año")) {
             opcion[0] = "Elija opción";
             opcion[1] = "General";
             opcion[2] = "Técnico";
-        }else{
+        } else {
             opcion[0] = "Técnico";
         }
         return opcion;
     }
-    
-    public String[] getSeccion (String opcion){
+
+    public String[] getSeccion(String opcion) {
         String[] seccion = new String[4];
-        if(opcion.equalsIgnoreCase("general")){
+        if (opcion.equalsIgnoreCase("general")) {
             seccion[0] = "Elija sección";
             seccion[1] = "A";
             seccion[2] = "B";
             seccion[3] = "C";
         }
-        if(opcion.equalsIgnoreCase("técnico")){
+        if (opcion.equalsIgnoreCase("técnico")) {
             seccion[0] = "A";
         }
         return seccion;
     }
-    
-        /**
-         * @param args the command line arguments
-         */
+
+    public String[] getMateria(String opcion) {
+        String[] materia = new String[12];
+        if (opcion.equalsIgnoreCase("general")) {
+            materia[0] = "Matemáticas";
+            materia[1] = "Sociales";
+            materia[2] = "Ciencia";
+            materia[3] = "Lenguaje";
+            materia[4] = "Ingles";
+            materia[5] = "Orientación para la vida";
+            materia[6] = "Informática";
+            materia[7] = "Seminario";
+            materia[8] = "Habilitación laboral";
+        }
+        if (opcion.equalsIgnoreCase("técnico")) {
+            materia[0] = "Matemáticas";
+            materia[1] = "Sociales";
+            materia[2] = "Ciencia";
+            materia[3] = "Lenguaje";
+            materia[4] = "Ingles";
+            materia[5] = "Orientación para la vida";
+            materia[6] = "Seminario";
+            materia[7] = "Informática";
+            materia[8] = "Tecnología";
+            materia[9] = "Matemáticas financieras";
+            materia[10] = "Laboratorio de creatividad";
+            materia[11] = "Prácticas contables";
+        }
+        return materia;
+    }
+
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -786,6 +920,7 @@ public class registrarse extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrar;
+    private javax.swing.JComboBox<String> cbxMateria;
     private javax.swing.JComboBox<String> cbxOpcion;
     private javax.swing.JComboBox<String> cbxSeccion;
     private javax.swing.JComboBox<String> cbxYear;
