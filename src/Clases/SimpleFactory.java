@@ -32,6 +32,10 @@ public class SimpleFactory {
                 new registrarse().setVisible(true); //Para mostrar el formulario de registro
                 break;
             }
+            case 4: {
+                new registrarseGuia().setVisible(true); //Para mostrar el formulario de registro
+                break;
+            }
             default: {
                 System.out.println("Ocurrio un error en la creación de objetos");
                 break;

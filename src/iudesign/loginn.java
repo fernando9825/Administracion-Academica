@@ -49,11 +49,11 @@ public class loginn extends javax.swing.JFrame {
 
                     //SE OCULTA EL LOGIN
                     this.setVisible(false);
-                    //SE ABRE EL MENÚ
-                    //SimpleFactory simpleFactory = new SimpleFactory();
-                    //simpleFactory.constructorObjetosVariables(1, fullName, materia);
-                    //simpleFactory = null;
-                    new menú(fullName, materia).setVisible(true);
+//                    SE ABRE EL MENÚ
+                    SimpleFactory simpleFactory = new SimpleFactory();
+                    simpleFactory.constructorObjetosVariables(1, fullName, materia);
+                    simpleFactory = null;
+//                    new menú(fullName, materia).setVisible(true);
                     //SE CIERRA EL Login
                     this.dispose();
 
@@ -349,11 +349,52 @@ public class loginn extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel2ComponentShown
     //BOTÓN REGISTRARSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed
-        this.dispose();
-        SimpleFactory simpleFactory = new SimpleFactory();
-        simpleFactory.constructorObjetos(3); //Registrarse
-        simpleFactory = null;
-        //new registrarse().setVisible(true);
+        try {
+            Object[] options = {"¡Sí!", "¡No!"};
+            String mensaje = "¿Es maestro/a guia?";
+            SimpleFactory simpleFactory = new SimpleFactory();
+            conectarBD bd = new conectarBD();
+
+            int n = JOptionPane.showOptionDialog(this, mensaje, "Información",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
+            if (n == JOptionPane.YES_OPTION) {
+                String res = bd.mostrarDisp(bd.MaestroGuia());
+                if (res.equals("")) {
+                    JOptionPane.showMessageDialog(null, "Todos los años tienen "
+                            + "maestro guia.\nEn seguida le presentaré un formulario "
+                            + "donde podrá \nelegir el año, sección y materia "
+                            + "que va a desarrolar.");
+                    simpleFactory.constructorObjetos(3); //Registrarse
+                    this.dispose();
+                    
+                } else {
+                    JOptionPane.showMessageDialog(null, "Los siguientes años están "
+                            + "disponibles para usted:\n\n" + res
+                            + "\nPodrá estar a cargo de uno de ellos, en seguida le"
+                            + " presentaré un formulario de registro");
+                    simpleFactory.constructorObjetos(4); //RegistrarseGuia
+                    this.dispose();
+                }
+
+            } else if (n == JOptionPane.NO_OPTION) {
+                simpleFactory.constructorObjetos(3); //Registrarse
+                this.dispose();
+            } else {
+
+            }
+            simpleFactory = null;
+            bd = null;
+            //new registrarse().setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Se ha presentado el siguiente "
+                    + "error: \n\n" + e + "\nComuniquese con el administrador "
+                    + "para obtener una solución", "Ocurrio un error!", 0);
+        }
+
     }//GEN-LAST:event_btnRegistrarseActionPerformed
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
@@ -398,9 +439,9 @@ public class loginn extends javax.swing.JFrame {
     }//GEN-LAST:event_textFieldPasswordKeyPressed
 
     private void jToggleButton1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jToggleButton1ItemStateChanged
-       if (jToggleButton1.isSelected()) {
+        if (jToggleButton1.isSelected()) {
             jToggleButton1.setText("Ocultar");
-             textFieldPassword.setEchoChar((char)0); //Mostrar la contraseña
+            textFieldPassword.setEchoChar((char) 0); //Mostrar la contraseña
         } else {
             jToggleButton1.setText("Mostrar");
             textFieldPassword.setEchoChar('*'); //Ocultar la contraseña
@@ -422,7 +463,6 @@ public class loginn extends javax.swing.JFrame {
         int y = evt.getYOnScreen();
         this.setLocation(x - xx, y - xy);
     }//GEN-LAST:event_jPanel1MouseDragged
-    
 
     /**
      * @param args the command line arguments
