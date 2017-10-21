@@ -120,61 +120,70 @@ public class conectarBD {
 
         //Me equivoque en el nombre de las variables cuando habia avanzado, pero esta parte del codigo 
         //determinara si hay cupo disponible para maestros guias
-        String[] AñoOpcionSeccionDispCadena = new String[9];
+        String[] AñoOpcionSeccionDispCadena = new String[10];
         String query = "SELECT * FROM maestro_guia";
-        int[] AñoOpcionSeccionDisp = new int[9];
+        int[] AñoOpcionSeccionDisp = new int[10];
         if (abrirConexion()) {
             try {
                 ResultSet result = stm.executeQuery(query);
+                AñoOpcionSeccionDisp[0] = 1;
+                //AñoOpcionSeccionDisp[9] = 1;
                 while (result.next()) {
-                    for (int i = 0; i < 9; i++) {
-                        AñoOpcionSeccionDisp[i] = result.getInt((i + 1));
+                    for (int i = 1; i < AñoOpcionSeccionDisp.length; i++) {
+                        AñoOpcionSeccionDisp[i] = result.getInt((i));
+                        
                     }
+                    
                 }
             } catch (SQLException e) {
+                System.out.println(e);
             }
             cerrarConexion();
         }
 
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < AñoOpcionSeccionDispCadena.length; i++) {
 
-            if (i >= 0 && i <= 2) {
+            if (i >= 0 && i <= 3) {
                 switch (i) {
                     case 0: {
+                        AñoOpcionSeccionDispCadena[i] = "Elija una sección";
+                        break;
+                    }
+                    case 1: {
                         if (AñoOpcionSeccionDisp[i] == 1) {
                             AñoOpcionSeccionDispCadena[i] = "1° General A";
                         }
                         break;
                     }
-                    case 1: {
+                    case 2: {
                         if (AñoOpcionSeccionDisp[i] == 1) {
                             AñoOpcionSeccionDispCadena[i] = "1° General B";
                         }
                         break;
                     }
-                    case 2: {
+                    case 3: {
                         if (AñoOpcionSeccionDisp[i] == 1) {
                             AñoOpcionSeccionDispCadena[i] = "1° General C";
                         }
                         break;
                     }
                 }
-            } else if (i >= 3 && i <= 5) {
+            } else if (i >= 4 && i <= 6) {
 
                 switch (i) {
-                    case 3: {
+                    case 4: {
                         if (AñoOpcionSeccionDisp[i] == 1) {
                             AñoOpcionSeccionDispCadena[i] = "2° General A";
                         }
                         break;
                     }
-                    case 4: {
+                    case 5: {
                         if (AñoOpcionSeccionDisp[i] == 1) {
                             AñoOpcionSeccionDispCadena[i] = "2° General B";
                         }
                         break;
                     }
-                    case 5: {
+                    case 6: {
                         if (AñoOpcionSeccionDisp[i] == 1) {
                             AñoOpcionSeccionDispCadena[i] = "2° General C";
                         }
@@ -184,57 +193,48 @@ public class conectarBD {
 
             } else {
 
-                switch (i) {
-                    case 6: {
-                        if (AñoOpcionSeccionDisp[i] == 1) {
-                            AñoOpcionSeccionDispCadena[i] = "1° Técnico vocacional A";
-                        }
-                        break;
+                if (i == 7) {
+                    if (AñoOpcionSeccionDisp[i] == 1) {
+                        AñoOpcionSeccionDispCadena[i] = "1° Técnico vocacional A";
                     }
-                    case 7: {
-                        if (AñoOpcionSeccionDisp[i] == 1) {
-                            AñoOpcionSeccionDispCadena[i] = "2° Técnico vocacional A";
-                        }
-                        break;
+                } else if (i == 8) {
+                    if (AñoOpcionSeccionDisp[i] == 1) {
+                        AñoOpcionSeccionDispCadena[i] = "2° Técnico vocacional A";
                     }
-                    case 8: {
-                        if (AñoOpcionSeccionDisp[i] == 1) {
-                            AñoOpcionSeccionDispCadena[i] = "3° Técnico vocacional A";
-                        }
-                        break;
+                } else {
+                    if (AñoOpcionSeccionDisp[i] == 1) {
+                        AñoOpcionSeccionDispCadena[i] = "3° Técnico vocacional A";
                     }
                 }
-
             }
-
         }
         int x = 0;
-        for(int i = 0; i <AñoOpcionSeccionDispCadena.length; i++){
-            if(AñoOpcionSeccionDispCadena[i] != null){
+        for (int i = 0; i < AñoOpcionSeccionDispCadena.length; i++) {
+            if (AñoOpcionSeccionDispCadena[i] != null) {
                 x++;
             }
         }
+
         String[] AñoOpcionSeccionDispCadenaCorregido = new String[x];
-        for (int i=0; i<x; i++){
-            for(int j = i; j <AñoOpcionSeccionDispCadena.length; j++){
-                if(AñoOpcionSeccionDispCadena[j] != null){
+        for (int i = 0; i < x; i++) {
+            for (int j = i; j < AñoOpcionSeccionDispCadena.length; j++) {
+                if (AñoOpcionSeccionDispCadena[j] != null) {
                     AñoOpcionSeccionDispCadenaCorregido[i] = AñoOpcionSeccionDispCadena[j];
-                   break;
+                    break;
                 }
-                
+
             }
         }
-        return AñoOpcionSeccionDispCadenaCorregido;
+        return AñoOpcionSeccionDispCadena;
     }
-    
+
     public String[] getMateria(String opcion) {
-        
-        
-        
+
         String query = "SELECT * FROM materias_disp";
-        String[] materia = new String[12];
-        int[] comprobar = new int[12];
-        
+        String[] materia = new String[13];
+
+        int[] comprobar = new int[13];
+
         if (abrirConexion()) {
             try {
                 ResultSet result = stm.executeQuery(query);
@@ -247,56 +247,177 @@ public class conectarBD {
             }
             cerrarConexion();
         }
-        
-        for (int i = 0; i < materia.length; i++) {
-            
+
+        if (opcion.equalsIgnoreCase("general")) {
+            for (int i = 0; i < materia.length; i++) {
+                switch (i) {
+                    case 0: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Elija una materia";
+                        }
+                        break;
+                    }
+                    case 1: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Matemáticas";
+                        }
+                        break;
+                    }
+                    case 2: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Sociales";
+                        }
+                        break;
+                    }
+                    case 3: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Ciencia";
+                        }
+                        break;
+                    }
+                    case 4: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Lenguaje";
+                        }
+                        break;
+                    }
+                    case 5: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Ingles";
+                        }
+                        break;
+                    }
+                    case 6: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "opv";
+                        }
+                        break;
+                    }
+                    case 7: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Seminario";
+                        }
+                        break;
+                    }
+                    case 8: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Informática";
+                        }
+                        break;
+                    }
+                    case 9: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Tecnología";
+                        }
+                        break;
+                    }
+                }
+            }
         }
-        
-        /*
+        if (opcion.equalsIgnoreCase("técnico")) {
+            for (int i = 0; i < materia.length; i++) {
+                switch (i) {
+
+                    case 0: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Elija una materia";
+                        }
+                        break;
+                    }
+                    case 1: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Matemáticas";
+                        }
+                        break;
+                    }
+                    case 2: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Sociales";
+                        }
+                        break;
+                    }
+                    case 3: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Ciencia";
+                        }
+                        break;
+                    }
+                    case 4: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Lenguaje";
+                        }
+                        break;
+                    }
+                    case 5: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Ingles";
+                        }
+                        break;
+                    }
+                    case 6: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "opv";
+                        }
+                        break;
+                    }
+                    case 7: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Seminario";
+                        }
+                        break;
+                    }
+                    case 8: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Informática";
+                        }
+                        break;
+                    }
+                    case 9: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Tecnología";
+                        }
+                        break;
+                    }
+                    case 10: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Matemáticas_financieras";
+                        }
+                        break;
+                    }
+                    case 11: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Lab_creatividad";
+                        }
+                        break;
+                    }
+                    case 12: {
+                        if (comprobar[i] == 1) {
+                            materia[i] = "Prácticas_contables";
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
         int x = 0;
-        for(int i = 0; i <AñoOpcionSeccionDispCadena.length; i++){
-            if(AñoOpcionSeccionDispCadena[i] != null){
+        for (int i = 0; i < materia.length; i++) {
+            if (materia[i] != null) {
                 x++;
             }
         }
-        String[] AñoOpcionSeccionDispCadenaCorregido = new String[x];
-        for (int i=0; i<x; i++){
-            for(int j = i; j <AñoOpcionSeccionDispCadena.length; j++){
-                if(AñoOpcionSeccionDispCadena[j] != null){
-                    AñoOpcionSeccionDispCadenaCorregido[i] = AñoOpcionSeccionDispCadena[j];
-                   break;
+        String[] materiaCorregido = new String[x];
+        for (int i = 0; i < x; i++) {
+            for (int j = i; j < materia.length; j++) {
+                if (materia[j] != null) {
+                    materiaCorregido[i] = materia[j];
+                    break;
                 }
-                
+
             }
         }
-        
-*/
-        if (opcion.equalsIgnoreCase("general")) {
-            materia[0] = "Matemáticas";
-            materia[1] = "Sociales";
-            materia[2] = "Ciencia";
-            materia[3] = "Lenguaje";
-            materia[4] = "Ingles";
-            materia[5] = "Orientación para la vida";
-            materia[6] = "Informática";
-            materia[7] = "Seminario";
-            materia[8] = "Habilitación laboral";
-        }
-        if (opcion.equalsIgnoreCase("técnico")) {
-            materia[0] = "Matemáticas";
-            materia[1] = "Sociales";
-            materia[2] = "Ciencia";
-            materia[3] = "Lenguaje";
-            materia[4] = "Ingles";
-            materia[5] = "Orientación para la vida";
-            materia[6] = "Seminario";
-            materia[7] = "Informática";
-            materia[8] = "Tecnología";
-            materia[9] = "Matemáticas financieras";
-            materia[10] = "Laboratorio de creatividad";
-            materia[11] = "Prácticas contables";
-        }
-        return materia;
+
+        return materiaCorregido;
     }
 
     public String mostrarDisp(String[] arreglo) {

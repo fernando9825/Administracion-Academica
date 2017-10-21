@@ -27,9 +27,15 @@ public class registrarse extends javax.swing.JFrame {
     public registrarse() {
         initComponents();
         setLocationRelativeTo(null);
-        this.cbxOpcion.setVisible(false);
-        this.cbxSeccion.setVisible(false);
-        this.cbxMateria.setVisible(false);
+        ComprobarConexionInternet ie = new ComprobarConexionInternet();
+        if (ie.comprobarConexion()) {
+            conectarBD bd = new conectarBD();
+            this.cbxMateria.setModel(new DefaultComboBoxModel(bd.getMateria("técnico")));
+        } else {
+            JOptionPane.showMessageDialog(this, "¡No he detectado internet!\n¡recomiendo "
+                    + "verificar la conexion a internet y/o reiniciar el sistema!");
+        }
+
     }
 
     /**
@@ -66,9 +72,6 @@ public class registrarse extends javax.swing.JFrame {
         jToggleButton1 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
         jLabel10 = new javax.swing.JLabel();
-        cbxYear = new javax.swing.JComboBox<>();
-        cbxOpcion = new javax.swing.JComboBox<>();
-        cbxSeccion = new javax.swing.JComboBox<>();
         cbxMateria = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         btnRegistrar = new javax.swing.JButton();
@@ -167,6 +170,11 @@ public class registrarse extends javax.swing.JFrame {
                 txtCorreoActionPerformed(evt);
             }
         });
+        txtCorreo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCorreoKeyTyped(evt);
+            }
+        });
 
         jTextField4.setBackground(new java.awt.Color(0, 0, 51));
         jTextField4.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
@@ -194,6 +202,11 @@ public class registrarse extends javax.swing.JFrame {
         txtCorreoConfirm.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         txtCorreoConfirm.setForeground(new java.awt.Color(240, 240, 240));
         txtCorreoConfirm.setBorder(null);
+        txtCorreoConfirm.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCorreoConfirmKeyTyped(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(240, 240, 240));
@@ -209,10 +222,20 @@ public class registrarse extends javax.swing.JFrame {
                 txtPasswordActionPerformed(evt);
             }
         });
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyTyped(evt);
+            }
+        });
 
         txtPasswordConfirm.setBackground(new java.awt.Color(0, 0, 51));
         txtPasswordConfirm.setForeground(new java.awt.Color(240, 240, 240));
         txtPasswordConfirm.setBorder(null);
+        txtPasswordConfirm.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPasswordConfirmKeyTyped(evt);
+            }
+        });
 
         jToggleButton1.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         jToggleButton1.setText("Mostrar");
@@ -237,35 +260,14 @@ public class registrarse extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel10.setText("Año, opción, sección y materia (Disponibles).");
-
-        cbxYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elija año", "Primer año", "Segundo año", "Tercer año" }));
-        cbxYear.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbxYearItemStateChanged(evt);
-            }
-        });
-        cbxYear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxYearActionPerformed(evt);
-            }
-        });
-
-        cbxOpcion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elija opción" }));
-        cbxOpcion.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbxOpcionItemStateChanged(evt);
-            }
-        });
-
-        cbxSeccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elija sección" }));
-        cbxSeccion.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbxSeccionItemStateChanged(evt);
-            }
-        });
+        jLabel10.setText("Seleccione una de las materias disponibles");
 
         cbxMateria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elija materia" }));
+        cbxMateria.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxMateriaItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -281,12 +283,6 @@ public class registrarse extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(jLabel10)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(cbxYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(cbxOpcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(cbxSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -364,14 +360,9 @@ public class registrarse extends javax.swing.JFrame {
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbxYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxOpcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(cbxMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -448,15 +439,15 @@ public class registrarse extends javax.swing.JFrame {
                         .addGap(15, 15, 15)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 709, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 630));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 960));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -640,32 +631,46 @@ public class registrarse extends javax.swing.JFrame {
 
     //VALIDANDO QUE EL USUARIO INGRESE SÓLO LETRAS
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-        char C = evt.getKeyChar();
-        if (Character.isDigit(C) || ((int) evt.getKeyChar() > 32 && (int) evt.getKeyChar() <= 47
-                || (int) evt.getKeyChar() >= 58 && (int) evt.getKeyChar() <= 64
-                || (int) evt.getKeyChar() >= 91 && (int) evt.getKeyChar() <= 96
-                || (int) evt.getKeyChar() >= 123 && (int) evt.getKeyChar() <= 129
-                || (int) evt.getKeyChar() >= 131 && (int) evt.getKeyChar() <= 159
-                || (int) evt.getKeyChar() >= 166 && (int) evt.getKeyChar() <= 255)) {
+
+        if ((txtNombre.getText().length() <= 30)) {
+            char C = evt.getKeyChar();
+            if (Character.isDigit(C) || ((int) evt.getKeyChar() > 32 && (int) evt.getKeyChar() <= 47
+                    || (int) evt.getKeyChar() >= 58 && (int) evt.getKeyChar() <= 64
+                    || (int) evt.getKeyChar() >= 91 && (int) evt.getKeyChar() <= 96
+                    || (int) evt.getKeyChar() >= 123 && (int) evt.getKeyChar() <= 129
+                    || (int) evt.getKeyChar() >= 131 && (int) evt.getKeyChar() <= 159
+                    || (int) evt.getKeyChar() >= 166 && (int) evt.getKeyChar() <= 255)) {
+                getToolkit().beep();
+                evt.consume();
+                JOptionPane.showMessageDialog(this, "Ingrese solo letras.", "Dato erróneo", 0);
+                txtNombre.setCursor(null);
+            }
+        } else {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(this, "Ingrese solo letras.", "Dato erróneo", 0);
-            txtNombre.setCursor(null);
+            JOptionPane.showMessageDialog(this, "Ha superado la longitud del dato esperado", "Dato erróneo", 0);
         }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
-        char C = evt.getKeyChar();
-        if (Character.isDigit(C) || ((int) evt.getKeyChar() > 32 && (int) evt.getKeyChar() <= 47
-                || (int) evt.getKeyChar() >= 58 && (int) evt.getKeyChar() <= 64
-                || (int) evt.getKeyChar() >= 91 && (int) evt.getKeyChar() <= 96
-                || (int) evt.getKeyChar() >= 123 && (int) evt.getKeyChar() <= 129
-                || (int) evt.getKeyChar() >= 131 && (int) evt.getKeyChar() <= 159
-                || (int) evt.getKeyChar() >= 166 && (int) evt.getKeyChar() <= 255)) {
+
+        if ((txtApellido.getText().length() <= 30)) {
+            char C = evt.getKeyChar();
+            if (Character.isDigit(C) || ((int) evt.getKeyChar() > 32 && (int) evt.getKeyChar() <= 47
+                    || (int) evt.getKeyChar() >= 58 && (int) evt.getKeyChar() <= 64
+                    || (int) evt.getKeyChar() >= 91 && (int) evt.getKeyChar() <= 96
+                    || (int) evt.getKeyChar() >= 123 && (int) evt.getKeyChar() <= 129
+                    || (int) evt.getKeyChar() >= 131 && (int) evt.getKeyChar() <= 159
+                    || (int) evt.getKeyChar() >= 166 && (int) evt.getKeyChar() <= 255)) {
+                getToolkit().beep();
+                evt.consume();
+                JOptionPane.showMessageDialog(this, "Ingrese solo letras.", "Dato erróneo", 0);
+                txtApellido.setCursor(null);
+            }
+        } else {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(this, "Ingrese solo letras.", "Dato erróneo", 0);
-            txtApellido.setCursor(null);
+            JOptionPane.showMessageDialog(this, "Ha superado la longitud del dato esperado", "Dato erróneo", 0);
         }
     }//GEN-LAST:event_txtApellidoKeyTyped
 
@@ -707,98 +712,6 @@ public class registrarse extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
-    private void cbxYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxYearActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbxYearActionPerformed
-
-    //Esta parte del código, determina el valor del combobox seccion
-    private void cbxYearItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxYearItemStateChanged
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
-
-            try {
-                if (this.cbxYear.getSelectedIndex() == 3) {
-                    this.cbxOpcion.setVisible(true);
-                    this.cbxSeccion.setVisible(true);
-                    this.cbxMateria.setVisible(true);
-                    this.cbxOpcion.setModel(new DefaultComboBoxModel(this.getOpcion(this.cbxYear.getSelectedItem().toString())));
-                    this.cbxSeccion.setModel(new DefaultComboBoxModel(this.getSeccion("técnico")));
-                    this.cbxMateria.setModel(new DefaultComboBoxModel(this.getMateria("técnico")));
-
-                } else {
-                    if (this.cbxYear.getSelectedIndex() > 0) {
-                        this.cbxOpcion.setVisible(true);
-                        this.cbxSeccion.setVisible(false);
-                        this.cbxMateria.setVisible(false);
-                        this.cbxOpcion.setModel(new DefaultComboBoxModel(this.getOpcion(this.cbxYear.getSelectedItem().toString())));
-                    }
-                }
-                if (this.cbxYear.getSelectedItem().toString().equalsIgnoreCase("elija año")) {
-
-                    //Ocultando y vaciando comboboxes, para efectos de validación
-                    this.cbxOpcion.setVisible(false);
-                    this.cbxSeccion.setVisible(false);
-                    this.cbxMateria.setVisible(false);
-//                    this.cbxOpcion.removeAllItems();
-//                    this.cbxSeccion.removeAllItems();
-//                    this.cbxMateria.removeAllItems();
-
-                    //DE ESTO VOY A DETERMINAR SI PROCEDE O NO....... NO LO OLVIDES FERSITO...
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e, "Error", 0);
-            }
-        }
-    }//GEN-LAST:event_cbxYearItemStateChanged
-
-    private void cbxOpcionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxOpcionItemStateChanged
-
-        try {
-            if (this.cbxOpcion.getSelectedIndex() == 0) {
-                //Ocultando y vaciando los comboboxes, para efectos de validación
-                this.cbxSeccion.setVisible(false);
-                this.cbxMateria.setVisible(false);
-//                this.cbxSeccion.removeAllItems();
-//                this.cbxMateria.removeAllItems();
-            }
-
-            if (this.cbxOpcion.getSelectedIndex() > 0) {
-                this.cbxSeccion.setVisible(true);
-                this.cbxSeccion.setModel(new DefaultComboBoxModel(this.getSeccion(this.cbxOpcion.getSelectedItem().toString())));
-
-                if (this.cbxOpcion.getSelectedItem().toString().equalsIgnoreCase("general")) {
-                    this.cbxMateria.setModel(new DefaultComboBoxModel(this.getMateria("general")));
-                } else {
-                    this.cbxMateria.setVisible(false);
-                }
-
-                if (this.cbxOpcion.getSelectedItem().toString().equalsIgnoreCase("técnico")) {
-                    this.cbxMateria.setVisible(true);
-                    this.cbxMateria.setModel(new DefaultComboBoxModel(this.getMateria("técnico")));
-                }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e, "Error", 0);
-        }
-
-    }//GEN-LAST:event_cbxOpcionItemStateChanged
-
-    private void cbxSeccionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxSeccionItemStateChanged
-
-        try {
-            if (this.cbxSeccion.getSelectedItem().toString().equalsIgnoreCase("elija sección")) {
-                this.cbxMateria.removeAllItems();
-                this.cbxMateria.setVisible(false);
-            } else {
-                this.cbxMateria.setModel(new DefaultComboBoxModel(this.getMateria(this.cbxOpcion.getSelectedItem().toString())));
-                this.cbxMateria.setVisible(true);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e, "Error", 0);
-        }
-
-
-    }//GEN-LAST:event_cbxSeccionItemStateChanged
-
     private void jPanel1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseReleased
         setOpacity((float) 1.0);
     }//GEN-LAST:event_jPanel1MouseReleased
@@ -819,62 +732,139 @@ public class registrarse extends javax.swing.JFrame {
         this.setLocation(x - xx, y - xy);
     }//GEN-LAST:event_jPanel2MouseDragged
 
-    public String[] getOpcion(String años) {
-        String[] opcion = new String[3];
-        if (años.equalsIgnoreCase("primer año") || años.equalsIgnoreCase("segundo año")) {
-            opcion[0] = "Elija opción";
-            opcion[1] = "General";
-            opcion[2] = "Técnico";
+    //CBXMATERIA
+    private void cbxMateriaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxMateriaItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxMateriaItemStateChanged
+
+    private void txtCorreoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoKeyTyped
+        // TODO add your handling code here:
+
+//        || (int) evt.getKeyChar() >= 123 && (int) evt.getKeyChar() <= 129))
+//        || (int) evt.getKeyChar() >= 58 && (int) evt.getKeyChar() <= 63
+//        || (int) evt.getKeyChar() >= 91 && (int) evt.getKeyChar() <= 94
+//        || (int) evt.getKeyChar() == 96))
+        if ((txtCorreoConfirm.getText().length() < 50)) {
+            char C = evt.getKeyChar();
+            if (((int) evt.getKeyChar() >= 32 && (int) evt.getKeyChar() <= 44
+                    || (int) evt.getKeyChar() >= 58 && (int) evt.getKeyChar() <= 63
+                    || (int) evt.getKeyChar() >= 91 && (int) evt.getKeyChar() <= 94
+                    || (int) evt.getKeyChar() >= 123 && (int) evt.getKeyChar() <= 129
+                    || (int) evt.getKeyChar() == 96)) {
+                getToolkit().beep();
+                evt.consume();
+                JOptionPane.showMessageDialog(this, "Ingrese solo caracteres permitidos "
+                        + "\nen un correo electronico, revise en que se esta equivocando.", "Dato erróneo", 0);
+            }
         } else {
-            opcion[0] = "Técnico";
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Ha superado la longitud del dato esperado", "Dato erróneo", 0);
         }
-        return opcion;
-    }
+    }//GEN-LAST:event_txtCorreoKeyTyped
 
-    public String[] getSeccion(String opcion) {
-        String[] seccion = new String[4];
-        if (opcion.equalsIgnoreCase("general")) {
-            seccion[0] = "Elija sección";
-            seccion[1] = "A";
-            seccion[2] = "B";
-            seccion[3] = "C";
+    private void txtCorreoConfirmKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoConfirmKeyTyped
+        // TODO add your handling code here:
+        if ((txtCorreoConfirm.getText().length() < 50)) {
+            char C = evt.getKeyChar();
+            if (((int) evt.getKeyChar() >= 32 && (int) evt.getKeyChar() <= 44
+                    || (int) evt.getKeyChar() >= 58 && (int) evt.getKeyChar() <= 63
+                    || (int) evt.getKeyChar() >= 91 && (int) evt.getKeyChar() <= 94
+                    || (int) evt.getKeyChar() >= 123 && (int) evt.getKeyChar() <= 129
+                    || (int) evt.getKeyChar() == 96)) {
+                getToolkit().beep();
+                evt.consume();
+                JOptionPane.showMessageDialog(this, "Ingrese solo caracteres permitidos "
+                        + "\nen un correo electronico, revise en que se esta equivocando.", "Dato erróneo", 0);
+            }
+        } else {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Ha superado la longitud del dato esperado", "Dato erróneo", 0);
         }
-        if (opcion.equalsIgnoreCase("técnico")) {
-            seccion[0] = "A";
-        }
-        return seccion;
-    }
+    }//GEN-LAST:event_txtCorreoConfirmKeyTyped
 
-    public String[] getMateria(String opcion) {
-        String[] materia = new String[12];
-        if (opcion.equalsIgnoreCase("general")) {
-            materia[0] = "Matemáticas";
-            materia[1] = "Sociales";
-            materia[2] = "Ciencia";
-            materia[3] = "Lenguaje";
-            materia[4] = "Ingles";
-            materia[5] = "Orientación para la vida";
-            materia[6] = "Informática";
-            materia[7] = "Seminario";
-            materia[8] = "Habilitación laboral";
-        }
-        if (opcion.equalsIgnoreCase("técnico")) {
-            materia[0] = "Matemáticas";
-            materia[1] = "Sociales";
-            materia[2] = "Ciencia";
-            materia[3] = "Lenguaje";
-            materia[4] = "Ingles";
-            materia[5] = "Orientación para la vida";
-            materia[6] = "Seminario";
-            materia[7] = "Informática";
-            materia[8] = "Tecnología";
-            materia[9] = "Matemáticas financieras";
-            materia[10] = "Laboratorio de creatividad";
-            materia[11] = "Prácticas contables";
-        }
-        return materia;
-    }
+    private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
 
+        // TODO add your handling code here:
+        
+        if ((txtPassword.getText().length() < 20)) {
+            
+        }else{
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Ha superado la longitud del dato esperado", "Dato erróneo", 0);
+        }
+    }//GEN-LAST:event_txtPasswordKeyTyped
+
+    private void txtPasswordConfirmKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordConfirmKeyTyped
+        // TODO add your handling code here:i
+        
+        if ((txtPasswordConfirm.getText().length() < 20)) {
+            
+        }else{
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Ha superado la longitud del dato esperado", "Dato erróneo", 0);
+        }
+        
+    }//GEN-LAST:event_txtPasswordConfirmKeyTyped
+
+//    public String[] getOpcion(String años) {
+//        String[] opcion = new String[3];
+//        if (años.equalsIgnoreCase("primer año") || años.equalsIgnoreCase("segundo año")) {
+//            opcion[0] = "Elija opción";
+//            opcion[1] = "General";
+//            opcion[2] = "Técnico";
+//        } else {
+//            opcion[0] = "Técnico";
+//        }
+//        return opcion;
+//    }
+//
+//    public String[] getSeccion(String opcion) {
+//        String[] seccion = new String[4];
+//        if (opcion.equalsIgnoreCase("general")) {
+//            seccion[0] = "Elija sección";
+//            seccion[1] = "A";
+//            seccion[2] = "B";
+//            seccion[3] = "C";
+//        }
+//        if (opcion.equalsIgnoreCase("técnico")) {
+//            seccion[0] = "A";
+//        }
+//        return seccion;
+//    }
+//
+//    public String[] getMateria(String opcion) {
+//        String[] materia = new String[12];
+//        if (opcion.equalsIgnoreCase("general")) {
+//            materia[0] = "Matemáticas";
+//            materia[1] = "Sociales";
+//            materia[2] = "Ciencia";
+//            materia[3] = "Lenguaje";
+//            materia[4] = "Ingles";
+//            materia[5] = "Orientación para la vida";
+//            materia[6] = "Informática";
+//            materia[7] = "Seminario";
+//            materia[8] = "Habilitación laboral";
+//        }
+//        if (opcion.equalsIgnoreCase("técnico")) {
+//            materia[0] = "Matemáticas";
+//            materia[1] = "Sociales";
+//            materia[2] = "Ciencia";
+//            materia[3] = "Lenguaje";
+//            materia[4] = "Ingles";
+//            materia[5] = "Orientación para la vida";
+//            materia[6] = "Seminario";
+//            materia[7] = "Informática";
+//            materia[8] = "Tecnología";
+//            materia[9] = "Matemáticas financieras";
+//            materia[10] = "Laboratorio de creatividad";
+//            materia[11] = "Prácticas contables";
+//        }
+//        return materia;
+//    }
     /**
      * @param args the command line arguments
      */
@@ -921,9 +911,6 @@ public class registrarse extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JComboBox<String> cbxMateria;
-    private javax.swing.JComboBox<String> cbxOpcion;
-    private javax.swing.JComboBox<String> cbxSeccion;
-    private javax.swing.JComboBox<String> cbxYear;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel17;

@@ -362,6 +362,7 @@ public class loginn extends javax.swing.JFrame {
                     options,
                     options[0]);
             if (n == JOptionPane.YES_OPTION) {
+                
                 String res = bd.mostrarDisp(bd.MaestroGuia());
                 if (res.equals("")) {
                     JOptionPane.showMessageDialog(null, "Todos los años tienen "

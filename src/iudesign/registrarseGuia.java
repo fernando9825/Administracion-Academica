@@ -28,8 +28,10 @@ public class registrarseGuia extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         conectarBD bd = new conectarBD();
+
+        //Esta linea de codigo, determina, si hay maestros, y si hay, los pone en un combobox
         this.cbxYear.setModel(new DefaultComboBoxModel(bd.MaestroGuia()));
-        
+
     }
 
     /**
@@ -165,6 +167,11 @@ public class registrarseGuia extends javax.swing.JFrame {
                 txtCorreoActionPerformed(evt);
             }
         });
+        txtCorreo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCorreoKeyTyped(evt);
+            }
+        });
 
         jTextField4.setBackground(new java.awt.Color(0, 0, 51));
         jTextField4.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
@@ -192,6 +199,11 @@ public class registrarseGuia extends javax.swing.JFrame {
         txtCorreoConfirm.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         txtCorreoConfirm.setForeground(new java.awt.Color(240, 240, 240));
         txtCorreoConfirm.setBorder(null);
+        txtCorreoConfirm.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCorreoConfirmKeyTyped(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(240, 240, 240));
@@ -207,10 +219,20 @@ public class registrarseGuia extends javax.swing.JFrame {
                 txtPasswordActionPerformed(evt);
             }
         });
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyTyped(evt);
+            }
+        });
 
         txtPasswordConfirm.setBackground(new java.awt.Color(0, 0, 51));
         txtPasswordConfirm.setForeground(new java.awt.Color(240, 240, 240));
         txtPasswordConfirm.setBorder(null);
+        txtPasswordConfirm.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPasswordConfirmKeyTyped(evt);
+            }
+        });
 
         jToggleButton1.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         jToggleButton1.setText("Mostrar");
@@ -248,7 +270,7 @@ public class registrarseGuia extends javax.swing.JFrame {
             }
         });
 
-        cbxMateria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elija materia" }));
+        cbxMateria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Primero elija sección" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -423,15 +445,15 @@ public class registrarseGuia extends javax.swing.JFrame {
                         .addGap(15, 15, 15)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 640));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 650));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -615,32 +637,44 @@ public class registrarseGuia extends javax.swing.JFrame {
 
     //VALIDANDO QUE EL USUARIO INGRESE SÓLO LETRAS
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
-        char C = evt.getKeyChar();
-        if (Character.isDigit(C) || ((int) evt.getKeyChar() > 32 && (int) evt.getKeyChar() <= 47
-                || (int) evt.getKeyChar() >= 58 && (int) evt.getKeyChar() <= 64
-                || (int) evt.getKeyChar() >= 91 && (int) evt.getKeyChar() <= 96
-                || (int) evt.getKeyChar() >= 123 && (int) evt.getKeyChar() <= 129
-                || (int) evt.getKeyChar() >= 131 && (int) evt.getKeyChar() <= 159
-                || (int) evt.getKeyChar() >= 166 && (int) evt.getKeyChar() <= 255)) {
+        if ((txtNombre.getText().length() <= 30)) {
+            char C = evt.getKeyChar();
+            if (Character.isDigit(C) || ((int) evt.getKeyChar() > 32 && (int) evt.getKeyChar() <= 47
+                    || (int) evt.getKeyChar() >= 58 && (int) evt.getKeyChar() <= 64
+                    || (int) evt.getKeyChar() >= 91 && (int) evt.getKeyChar() <= 96
+                    || (int) evt.getKeyChar() >= 123 && (int) evt.getKeyChar() <= 129
+                    || (int) evt.getKeyChar() >= 131 && (int) evt.getKeyChar() <= 159
+                    || (int) evt.getKeyChar() >= 166 && (int) evt.getKeyChar() <= 255)) {
+                getToolkit().beep();
+                evt.consume();
+                JOptionPane.showMessageDialog(this, "Ingrese solo letras.", "Dato erróneo", 0);
+                txtNombre.setCursor(null);
+            }
+        } else {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(this, "Ingrese solo letras.", "Dato erróneo", 0);
-            txtNombre.setCursor(null);
+            JOptionPane.showMessageDialog(this, "Ha superado la longitud del dato esperado", "Dato erróneo", 0);
         }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
-        char C = evt.getKeyChar();
-        if (Character.isDigit(C) || ((int) evt.getKeyChar() > 32 && (int) evt.getKeyChar() <= 47
-                || (int) evt.getKeyChar() >= 58 && (int) evt.getKeyChar() <= 64
-                || (int) evt.getKeyChar() >= 91 && (int) evt.getKeyChar() <= 96
-                || (int) evt.getKeyChar() >= 123 && (int) evt.getKeyChar() <= 129
-                || (int) evt.getKeyChar() >= 131 && (int) evt.getKeyChar() <= 159
-                || (int) evt.getKeyChar() >= 166 && (int) evt.getKeyChar() <= 255)) {
+        if ((txtApellido.getText().length() <= 30)) {
+            char C = evt.getKeyChar();
+            if (Character.isDigit(C) || ((int) evt.getKeyChar() > 32 && (int) evt.getKeyChar() <= 47
+                    || (int) evt.getKeyChar() >= 58 && (int) evt.getKeyChar() <= 64
+                    || (int) evt.getKeyChar() >= 91 && (int) evt.getKeyChar() <= 96
+                    || (int) evt.getKeyChar() >= 123 && (int) evt.getKeyChar() <= 129
+                    || (int) evt.getKeyChar() >= 131 && (int) evt.getKeyChar() <= 159
+                    || (int) evt.getKeyChar() >= 166 && (int) evt.getKeyChar() <= 255)) {
+                getToolkit().beep();
+                evt.consume();
+                JOptionPane.showMessageDialog(this, "Ingrese solo letras.", "Dato erróneo", 0);
+                txtApellido.setCursor(null);
+            }
+        } else {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(this, "Ingrese solo letras.", "Dato erróneo", 0);
-            txtApellido.setCursor(null);
+            JOptionPane.showMessageDialog(this, "Ha superado la longitud del dato esperado", "Dato erróneo", 0);
         }
     }//GEN-LAST:event_txtApellidoKeyTyped
 
@@ -689,9 +723,32 @@ public class registrarseGuia extends javax.swing.JFrame {
     //Esta parte del código, determina el valor del combobox seccion
     private void cbxYearItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxYearItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
+            if (cbxYear.getSelectedIndex() == 0) {
+                String[] selecM = new String[1]; 
+                selecM[0] = "Primero elija sección";
+                cbxMateria.setModel(new DefaultComboBoxModel(selecM));
+            } else {
+                try {
+                    ComprobarConexionInternet ie = new ComprobarConexionInternet();
+                    //Este procedimiento requiere internet, asi que se verifica antes de hacer cualquier cosa.
+                    if (ie.comprobarConexion()) {
+                        conectarBD bd = new conectarBD();
+                        if (cbxYear.getSelectedItem().toString().contains("General")) {
+                            cbxMateria.setModel(new DefaultComboBoxModel(bd.getMateria("general")));
 
+                        } else if (cbxYear.getSelectedItem().toString().contains("Técnico")) {
+                            cbxMateria.setModel(new DefaultComboBoxModel(bd.getMateria("técnico")));
+                        }
+
+                        bd = null;
+                    }
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "No se pudo conectar, revise su conexión y vuelva a intentar");
+                }
+            }
         }
-                
+
     }//GEN-LAST:event_cbxYearItemStateChanged
 
     private void jPanel1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseReleased
@@ -714,7 +771,70 @@ public class registrarseGuia extends javax.swing.JFrame {
         this.setLocation(x - xx, y - xy);
     }//GEN-LAST:event_jPanel2MouseDragged
 
-    
+    private void txtCorreoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoKeyTyped
+        // TODO add your handling code here:
+       if ((txtCorreo.getText().length() < 50)) {
+            char C = evt.getKeyChar();
+            if (((int) evt.getKeyChar() >= 32 && (int) evt.getKeyChar() <= 44
+                    || (int) evt.getKeyChar() >= 58 && (int) evt.getKeyChar() <= 63
+                    || (int) evt.getKeyChar() >= 91 && (int) evt.getKeyChar() <= 94
+                    || (int) evt.getKeyChar() >= 123 && (int) evt.getKeyChar() <= 129
+                    || (int) evt.getKeyChar() == 96)) {
+                getToolkit().beep();
+                evt.consume();
+                JOptionPane.showMessageDialog(this, "Ingrese solo caracteres permitidos "
+                        + "\nen un correo electronico, revise en que se esta equivocando.", "Dato erróneo", 0);
+            }
+        } else {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Ha superado la longitud del dato esperado", "Dato erróneo", 0);
+        }
+    }//GEN-LAST:event_txtCorreoKeyTyped
+
+    private void txtCorreoConfirmKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoConfirmKeyTyped
+        // TODO add your handling code here:
+        if ((txtCorreoConfirm.getText().length() < 50)) {
+            char C = evt.getKeyChar();
+            if (((int) evt.getKeyChar() >= 32 && (int) evt.getKeyChar() <= 44
+                    || (int) evt.getKeyChar() >= 58 && (int) evt.getKeyChar() <= 63
+                    || (int) evt.getKeyChar() >= 91 && (int) evt.getKeyChar() <= 94
+                    || (int) evt.getKeyChar() >= 123 && (int) evt.getKeyChar() <= 129
+                    || (int) evt.getKeyChar() == 96)) {
+                getToolkit().beep();
+                evt.consume();
+                JOptionPane.showMessageDialog(this, "Ingrese solo caracteres permitidos "
+                        + "\nen un correo electronico, revise en que se esta equivocando.", "Dato erróneo", 0);
+            }
+        } else {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Ha superado la longitud del dato esperado", "Dato erróneo", 0);
+        }
+    }//GEN-LAST:event_txtCorreoConfirmKeyTyped
+
+    private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
+        // TODO add your handling code here:
+        if ((txtPassword.getText().length() < 20)) {
+            
+        }else{
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Ha superado la longitud del dato esperado", "Dato erróneo", 0);
+        }
+    }//GEN-LAST:event_txtPasswordKeyTyped
+
+    private void txtPasswordConfirmKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordConfirmKeyTyped
+        // TODO add your handling code here:
+        if ((txtPasswordConfirm.getText().length() < 20)) {
+            
+        }else{
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Ha superado la longitud del dato esperado", "Dato erróneo", 0);
+        }
+    }//GEN-LAST:event_txtPasswordConfirmKeyTyped
+
     /*
     public String[] getOpcion(String años) {
         String[] opcion = new String[3];
@@ -741,7 +861,7 @@ public class registrarseGuia extends javax.swing.JFrame {
         }
         return seccion;
     }
-*/
+     */
     public String[] getMateria(String opcion) {
         String[] materia = new String[12];
         if (opcion.equalsIgnoreCase("general")) {
