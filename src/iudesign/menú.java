@@ -111,7 +111,7 @@ public class menú extends javax.swing.JFrame {
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 690, 1360, 50));
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 240, 240), 2));
+        jPanel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_User_96px_3.png"))); // NOI18N
 
@@ -164,10 +164,9 @@ public class menú extends javax.swing.JFrame {
                         .addGap(39, 39, 39)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelmateria, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
-                                .addComponent(JlabelFullName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(11, Short.MAX_VALUE))
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(JlabelFullName, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,10 +187,10 @@ public class menú extends javax.swing.JFrame {
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel15)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 330, 630));
+        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 60, -1, 630));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(240, 240, 240));
@@ -217,6 +216,11 @@ public class menú extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnIngresarNotasMouseExited(evt);
+            }
+        });
+        btnIngresarNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarNotasActionPerformed(evt);
             }
         });
         getContentPane().add(btnIngresarNotas, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 250, 240, 150));
@@ -291,7 +295,7 @@ public class menú extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap(617, Short.MAX_VALUE)
+                .addContainerGap(631, Short.MAX_VALUE)
                 .addComponent(jLabel9)
                 .addGap(400, 400, 400)
                 .addComponent(btnMinimizar, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -416,6 +420,12 @@ public class menú extends javax.swing.JFrame {
     private void btnMinimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinimizarMouseClicked
         this.setExtendedState(1);
     }//GEN-LAST:event_btnMinimizarMouseClicked
+
+    private void btnIngresarNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarNotasActionPerformed
+        this.dispose();
+        new ingresonotas().setVisible(true);
+// TODO add your handling code here:
+    }//GEN-LAST:event_btnIngresarNotasActionPerformed
 
     /**
      * @param args the command line arguments
