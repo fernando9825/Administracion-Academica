@@ -5,6 +5,8 @@
  */
 package iudesign;
 
+import Clases.SimpleFactory;
+
 /**
  *
  * @author m98am
@@ -14,9 +16,16 @@ public class ingresonotas extends javax.swing.JFrame {
     /**
      * Creates new form ingresonotas
      */
-    public ingresonotas() {
+        
+    private static String fullName, materia, seccion;
+    public ingresonotas(String fullName, String materia, String seccion) {
         initComponents();
         setLocationRelativeTo(null);
+        
+        //Dandole valor a las variables globales
+        this.fullName = fullName;
+        this.materia = materia;
+        this.seccion = seccion;
     }
 
     /**
@@ -284,15 +293,35 @@ public class ingresonotas extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel12MouseClicked
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
-         this.dispose();
-         
-        // TODO add your handling code here:
+         if(seccion == null){
+             this.dispose();
+        SimpleFactory simpleFactory = new SimpleFactory();
+        simpleFactory.constructorObjetosVariables(3, fullName, materia, seccion);
+        simpleFactory = null;
+        //new menú(fullName, materia).setVisible(true);
+        }else{
+        this.dispose();
+        SimpleFactory simpleFactory = new SimpleFactory();
+        simpleFactory.constructorObjetosVariables(1, fullName, materia, seccion);
+        simpleFactory = null;
+        //new menú(fullName, materia).setVisible(true);
+        }
     }//GEN-LAST:event_jLabel13MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-      this.dispose();
-       
-        // TODO add your handling code here:
+      if(seccion == null){
+             this.dispose();
+        SimpleFactory simpleFactory = new SimpleFactory();
+        simpleFactory.constructorObjetosVariables(3, fullName, materia, seccion);
+        simpleFactory = null;
+        //new menú(fullName, materia).setVisible(true);
+        }else{
+        this.dispose();
+        SimpleFactory simpleFactory = new SimpleFactory();
+        simpleFactory.constructorObjetosVariables(1, fullName, materia, seccion);
+        simpleFactory = null;
+        //new menú(fullName, materia).setVisible(true);
+        }
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
@@ -330,7 +359,7 @@ public class ingresonotas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ingresonotas().setVisible(true);
+                new ingresonotas(fullName, materia, seccion).setVisible(true);
             }
         });
     }

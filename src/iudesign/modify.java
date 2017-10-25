@@ -5,6 +5,8 @@
  */
 package iudesign;
 
+import Clases.SimpleFactory;
+
 /**
  *
  * @author m98am
@@ -14,8 +16,14 @@ public class modify extends javax.swing.JFrame {
     /**
      * Creates new form modify
      */
-    public modify() {
+    private static String fullName, materia, seccion;
+    public modify(String fullName, String materia, String seccion) {
         initComponents();
+        
+        //Dandole valor a las variables globales
+        this.fullName = fullName;
+        this.materia = materia;
+        this.seccion = seccion;
     }
 
     /**
@@ -71,7 +79,7 @@ public class modify extends javax.swing.JFrame {
                 jLabel12MouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(702, 0, 20, -1));
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 10, 20, 20));
 
         jPanel4.setBackground(new java.awt.Color(33, 33, 72));
         jPanel4.setOpaque(false);
@@ -189,15 +197,25 @@ public class modify extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/f6455156089967c9b421335e13a00d6f--nature-illustration-illustration-styles.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 550));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 550));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+        if(seccion == null){
+             this.dispose();
+        SimpleFactory simpleFactory = new SimpleFactory();
+        simpleFactory.constructorObjetosVariables(3, fullName, materia, seccion);
+        simpleFactory = null;
+        //new menú(fullName, materia).setVisible(true);
+        }else{
         this.dispose();
-
-        // TODO add your handling code here:
+        SimpleFactory simpleFactory = new SimpleFactory();
+        simpleFactory.constructorObjetosVariables(1, fullName, materia, seccion);
+        simpleFactory = null;
+        //new menú(fullName, materia).setVisible(true);
+        }
     }//GEN-LAST:event_jLabel13MouseClicked
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
@@ -211,9 +229,19 @@ public class modify extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        if(seccion == null){
+             this.dispose();
+        SimpleFactory simpleFactory = new SimpleFactory();
+        simpleFactory.constructorObjetosVariables(3, fullName, materia, seccion);
+        simpleFactory = null;
+        //new menú(fullName, materia).setVisible(true);
+        }else{
         this.dispose();
-
-        // TODO add your handling code here:
+        SimpleFactory simpleFactory = new SimpleFactory();
+        simpleFactory.constructorObjetosVariables(1, fullName, materia, seccion);
+        simpleFactory = null;
+        //new menú(fullName, materia).setVisible(true);
+        }
     }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
@@ -246,7 +274,7 @@ public class modify extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new modify().setVisible(true);
+                new modify(fullName, materia, seccion).setVisible(true);
             }
         });
     }

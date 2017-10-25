@@ -264,7 +264,7 @@ public class registrarse extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jPanel1);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 430, 420));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, 430, 420));
 
         btnRegistrar.setBackground(new java.awt.Color(183, 73, 0));
         btnRegistrar.setForeground(new java.awt.Color(240, 240, 240));
@@ -280,11 +280,11 @@ public class registrarse extends javax.swing.JFrame {
                 btnRegistrarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 690, 102, 45));
+        jPanel2.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 650, 210, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/spinner.gif"))); // NOI18N
         jLabel1.setText("jLabel1");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 690, 210, 40));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 650, 210, 40));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Go Back_32px.png"))); // NOI18N
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -301,8 +301,9 @@ public class registrarse extends javax.swing.JFrame {
                 jLabel17MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(578, 1, 20, -1));
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 0, 20, -1));
 
+        jLabel2.setBackground(new java.awt.Color(0, 0, 0));
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
         jLabel2.setText("Registro");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(63, 16, -1, 38));
@@ -312,7 +313,7 @@ public class registrarse extends javax.swing.JFrame {
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/bf8ab7e62f9ed5ebe52998b9d238296a.jpg"))); // NOI18N
         jLabel11.setText("jLabel11");
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, -1));
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 740));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 750));
 
@@ -366,8 +367,8 @@ public class registrarse extends javax.swing.JFrame {
         //SI LA CONEXION A INTERNET ESTA BIEN, ENTONCES SE PREOCEDE A GUARDAR EL NUEVO MAESTRO.
         ComprobarConexionInternet i = new ComprobarConexionInternet();
         if (i.comprobarConexion()) {
-            boolean nombrebol, apellidobol, correobol, correoConfirm, contra, contraConfirm;
-            nombrebol = apellidobol = correobol = correoConfirm = contra = contraConfirm = false;
+            boolean nombrebol, apellidobol, correobol, correoConfirm, contra, contraConfirm, materiabol;
+            nombrebol = apellidobol = correobol = correoConfirm = contra = contraConfirm = materiabol = false;
             String campos = "";
 
             //EN PRIMERA INSTANCIA, SE COMPRUEBA SI TODOS LOS CAMPOS ESTAN VACIOS
@@ -382,34 +383,38 @@ public class registrarse extends javax.swing.JFrame {
                 contraseña = (txtPassword.getText());
                 contraseñaVerificar = (txtPasswordConfirm.getText());
                 fullName = nombre + " " + apellido;
-                materia = "asdasd";
+                materia = cbxMateria.getSelectedItem().toString();
 
-                //Aqui se ingresa el nuevo maestro a la BD Online
-                if (correo.equalsIgnoreCase(correoVerificar)) {
-                    if (contraseña.equals(contraseñaVerificar)) {
-                        //Creando una instancia de la clase conectarBD para la inserción
-                        conectarBD bd = new conectarBD();
+                if (cbxMateria.getSelectedItem().toString() != "Elija una materia") {
+                    //Aqui se ingresa el nuevo maestro a la BD Online
+                    if (correo.equalsIgnoreCase(correoVerificar)) {
+                        if (contraseña.equals(contraseñaVerificar)) {
+                            //Creando una instancia de la clase conectarBD para la inserción
+                            conectarBD bd = new conectarBD();
 
-                        //SIMPLE FACTORY
-                        //Abrir el menú una vez que se ha registrado en la BD
-                        if (bd.RegistrarMaestro(correo, nombre, apellido, contraseña, materia)) {
-                            JOptionPane.showMessageDialog(this, "Felicidades " + fullName
-                                    + "\nse ha registrado satisfactoriamente en el sistema"
-                                    + "\nen seguida iniciará sesión automáticamente", "Registro completo", 1);
-                            SimpleFactory simpleFactory = new SimpleFactory();
-                            simpleFactory.constructorObjetosVariables(1, fullName, correo);
-                            simpleFactory = null;
-                            //Cerrar REGISTRAR
-                            this.dispose();
+                            //SIMPLE FACTORY
+                            //Abrir el menú una vez que se ha registrado en la BD
+                            if (bd.RegistrarMaestro(correo, nombre, apellido, contraseña, materia, null)) {
+                                JOptionPane.showMessageDialog(this, "Felicidades " + fullName
+                                        + "\nse ha registrado satisfactoriamente en el sistema"
+                                        + "\nen seguida iniciará sesión automáticamente", "Registro completo", 1);
+                                SimpleFactory simpleFactory = new SimpleFactory();
+                                simpleFactory.constructorObjetosVariables(3, fullName, materia, null);
+                                simpleFactory = null;
+                                //Cerrar REGISTRAR
+                                this.dispose();
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Algo salió mal,"
+                                        + " revise su conexión a internet y vuelva a interntarlo", "Información", 0);
+                            }
                         } else {
-                            JOptionPane.showMessageDialog(this, "Algo salió mal,"
-                                    + " revise su conexión a internet y vuelva a interntarlo", "Información", 0);
+                            JOptionPane.showMessageDialog(this, "Los campos de contraseña no coinciden", "Información", 0);
                         }
                     } else {
-                        JOptionPane.showMessageDialog(this, "Los campos de contraseña no coinciden", "Información", 0);
+                        JOptionPane.showMessageDialog(this, "Los campos de correo no coinciden", "Información", 0);
                     }
-                } else {
-                    JOptionPane.showMessageDialog(this, "Los campos de correo no coinciden", "Información", 0);
+                }else{
+                    JOptionPane.showMessageDialog(this, "Le falta elegir de la lista desplegable la materia", "Información", 0);
                 }
 
             } else {
@@ -437,13 +442,21 @@ public class registrarse extends javax.swing.JFrame {
                 if ((txtPasswordConfirm.getText()).length() == 0) {
                     contraConfirm = true;
                 }
+                
+                if (cbxMateria.getSelectedItem().toString().equalsIgnoreCase("Elija una sección")) {
+                    materiabol = true;
+                }
+                if (cbxMateria.getSelectedItem().toString().equalsIgnoreCase("Elija una materia")) {
+                    materiabol = true;
+                }
 
                 //MOSTRAR UN MENSAJE SOBRE QUE CAMPOS FALTAN
                 if (nombrebol == true || apellidobol == true || correobol == true
-                        || correoConfirm == true || contra == true || contraConfirm == true) {
+                        || correoConfirm == true || contra == true || contraConfirm == true
+                        || materiabol == true) {
                     //Logic
                     String nombrecad = "", apellidocad = "", correocad = "",
-                            correoConfirmcad = "", contracad = "", contraConfirmcad = "";
+                            correoConfirmcad = "", contracad = "", contraConfirmcad = "", materiacad = "";
                     if (nombrebol) {
                         nombrecad += "Nombre\n";
                     }
@@ -462,8 +475,13 @@ public class registrarse extends javax.swing.JFrame {
                     if (contraConfirm) {
                         contraConfirmcad += "Confirmar contraseña\n";
                     }
+                    
+                    if (materiabol) {
+                        materiacad += "Materia (Combobox)\n";
+                    }
 
-                    campos += nombrecad + "\n" + apellidocad + "\n" + correocad + "\n" + correoConfirmcad + "\n" + contracad + "\n" + contraConfirmcad;
+                    campos += nombrecad + apellidocad + correocad + 
+                            correoConfirmcad + contracad + contraConfirmcad + materiacad;
                     JOptionPane.showMessageDialog(this, "Los siguientes campos están vacíos.\n" + campos + "\nPor favor, complete el formulario.", "Información", 0);
                 }
             }
@@ -654,10 +672,9 @@ public class registrarse extends javax.swing.JFrame {
     private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
 
         // TODO add your handling code here:
-        
         if ((txtPassword.getText().length() < 20)) {
-            
-        }else{
+
+        } else {
             getToolkit().beep();
             evt.consume();
             JOptionPane.showMessageDialog(this, "Ha superado la longitud del dato esperado", "Dato erróneo", 0);
@@ -666,15 +683,15 @@ public class registrarse extends javax.swing.JFrame {
 
     private void txtPasswordConfirmKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordConfirmKeyTyped
         // TODO add your handling code here:i
-        
+
         if ((txtPasswordConfirm.getText().length() < 20)) {
-            
-        }else{
+
+        } else {
             getToolkit().beep();
             evt.consume();
             JOptionPane.showMessageDialog(this, "Ha superado la longitud del dato esperado", "Dato erróneo", 0);
         }
-        
+
     }//GEN-LAST:event_txtPasswordConfirmKeyTyped
 
 //    public String[] getOpcion(String años) {

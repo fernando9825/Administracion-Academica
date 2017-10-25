@@ -8,6 +8,7 @@ package iudesign;
 import Clases.ComprobarConexionInternet;
 import Clases.SimpleFactory;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -19,15 +20,25 @@ import javax.swing.JOptionPane;
  *
  * @author m98am
  */
-public class menú extends javax.swing.JFrame {
+public class menúGuia extends javax.swing.JFrame {
 
     /**
-     * Creates new form menú
+     * Creates new form menúGuia
      */
     //Manejo de variables
-    private static String fullName, materia;
+    private static String fullName,
 
-    public menú(String fullName, String materia) {
+    /**
+     * Creates new form menúGuia
+     */
+    materia, 
+
+    /**
+     * Creates new form menúGuia
+     */
+    seccion;
+
+    public menúGuia(String fullName, String materia, String seccion) {
         initComponents();
         setLocationRelativeTo(null);
         PanelInfo.setVisible(false);
@@ -35,10 +46,15 @@ public class menú extends javax.swing.JFrame {
         //Dandole valor a las variables globales
         this.fullName = fullName;
         this.materia = materia;
+        this.seccion = seccion;
 
         //Haciendo que los labels tengan los valores que deben
-        menú.JlabelFullName.setText(fullName);
-        menú.jLabelmateria.setText(materia);
+        menúGuia.JlabelFullName.setText(fullName);
+        menúGuia.jLabelmateria.setText(materia);
+        
+        menúGuia.jlabelSeccion.setText(seccion);
+        menúGuia.jlabelSeccion.setToolTipText(seccion);
+        
 
     }
 
@@ -53,6 +69,7 @@ public class menú extends javax.swing.JFrame {
 
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jlabelSeccion = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -91,21 +108,27 @@ public class menú extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(240, 240, 240));
         jLabel1.setText("Complejo Educativo Confederación Suiza");
 
+        jlabelSeccion.setForeground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(403, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jlabelSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 339, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(364, 364, 364))
+                .addGap(352, 352, 352))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                    .addComponent(jlabelSeccion))
+                .addContainerGap())
         );
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 1000, 50));
@@ -158,6 +181,11 @@ public class menú extends javax.swing.JFrame {
                 btnModificarNotasMouseExited(evt);
             }
         });
+        btnModificarNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarNotasActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnModificarNotas, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 60, 240, 130));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -195,7 +223,7 @@ public class menú extends javax.swing.JFrame {
         PanelInfo.setForeground(new java.awt.Color(0, 0, 51));
         PanelInfo.setOpaque(false);
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(240, 240, 240));
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Attention_32px.png"))); // NOI18N
@@ -207,20 +235,20 @@ public class menú extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelInfoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel16)
-                .addGap(6, 6, 6)
-                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         PanelInfoLayout.setVerticalGroup(
             PanelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelInfoLayout.createSequentialGroup()
-                .addGroup(PanelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16))
+                .addGroup(PanelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 6, Short.MAX_VALUE))
         );
 
-        getContentPane().add(PanelInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 570, 600, 40));
+        getContentPane().add(PanelInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 560, 490, 40));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_Male_User_100px.png"))); // NOI18N
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 110, -1));
@@ -230,6 +258,7 @@ public class menú extends javax.swing.JFrame {
         brnCerrarSesion.setText("Cerrar sesión");
         brnCerrarSesion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 51, 0)));
         brnCerrarSesion.setContentAreaFilled(false);
+        brnCerrarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         brnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 brnCerrarSesionActionPerformed(evt);
@@ -341,9 +370,9 @@ public class menú extends javax.swing.JFrame {
         ComprobarConexionInternet i = new ComprobarConexionInternet();
         if (i.comprobarConexion()) {
             this.setVisible(false);
-            //Abrir nueva ventana, sin cerrar el menú
+            //Abrir nueva ventana, sin cerrar el menúGuia
             SimpleFactory simpleFactory = new SimpleFactory();
-            simpleFactory.constructorObjetosVariables(2, fullName, materia);
+            simpleFactory.constructorObjetosVariables(2, fullName, materia, seccion);
             simpleFactory = null;
             //new matricula(fullName, materia).setVisible(true);
             this.dispose();
@@ -367,10 +396,19 @@ public class menú extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMinimizarMouseClicked
 
     private void btnIngresarNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarNotasActionPerformed
+       SimpleFactory simpleFactory = new SimpleFactory();
+        simpleFactory.constructorObjetosVariables(4, fullName, materia, seccion); 
+        simpleFactory = null;
         this.dispose();
-        new ingresonotas().setVisible(true);
-// TODO add your handling code here:
+        
     }//GEN-LAST:event_btnIngresarNotasActionPerformed
+
+    private void btnModificarNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarNotasActionPerformed
+        SimpleFactory simpleFactory = new SimpleFactory();
+        simpleFactory.constructorObjetosVariables(5, fullName, materia, seccion); 
+        simpleFactory = null;
+        this.dispose();
+    }//GEN-LAST:event_btnModificarNotasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -389,20 +427,21 @@ public class menú extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(menú.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(menúGuia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(menú.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(menúGuia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(menú.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(menúGuia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(menú.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(menúGuia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new menú(fullName, materia).setVisible(true);
+                new menúGuia(fullName, materia, seccion).setVisible(true);
             }
         });
     }
@@ -435,5 +474,6 @@ public class menú extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
+    public static javax.swing.JLabel jlabelSeccion;
     // End of variables declaration//GEN-END:variables
 }

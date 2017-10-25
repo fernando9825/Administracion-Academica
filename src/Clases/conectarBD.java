@@ -38,7 +38,7 @@ public class conectarBD {
             + "?user=" + usuarioCon + "&password=" + passwordCon;
 
     //Variables publicas para manejar el inicio de sesión
-    public String usuarioBD, passwordBD, fullname, correo, materia;
+    public String usuarioBD, passwordBD, fullname, correo, materia, seccion;
 
     public conectarBD() {
         //CONSTRUCTOR DE LA CLASE
@@ -84,6 +84,7 @@ public class conectarBD {
                     passwordBD = result.getString("password");
                     fullname = result.getString("nombre") + " " + result.getString("apellido");
                     materia = result.getString("materia");
+                    seccion = result.getString("seccion");
                     //String email = result.getString("email");
 
                     //String output = "User #%d: %s - %s - %s - %s";
@@ -96,12 +97,12 @@ public class conectarBD {
 
     }
 
-    public boolean RegistrarMaestro(String correo, String nombre, String apellido, String passWord, String materia) {
+    public boolean RegistrarMaestro(String correo, String nombre, String apellido, String passWord, String materia, String seccion) {
         boolean ingresado = false;
         if (abrirConexion()) {
             try {
                 // the mysql insert statement
-                String query = "INSERT INTO maestros(correo, nombre, apellido, password, materia) VALUES ('" + correo + "', '" + nombre + "', '" + apellido + "', '" + passWord + "', '" + materia + "')";
+                String query = "INSERT INTO maestros(correo, nombre, apellido, password, materia, seccion) VALUES ('" + correo + "', '" + nombre + "', '" + apellido + "', '" + passWord + "', '" + materia + "', '" + seccion + "')";
 
                 st.executeUpdate(query);
                 //Cerrar la conexion

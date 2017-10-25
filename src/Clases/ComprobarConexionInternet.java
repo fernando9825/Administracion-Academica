@@ -5,7 +5,7 @@
  */
 package Clases;
 
-import iudesign.menú;
+import iudesign.menúGuia;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -34,7 +34,7 @@ public class ComprobarConexionInternet {
                     conex = true;
                 }
             } catch (IOException ex) {
-                Logger.getLogger(menú.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(menúGuia.class.getName()).log(Level.SEVERE, null, ex);
                 
                 //SI OCURRE UNA EXCEPCION, SE DETENDRA LA EJECUCION
                 //PARA EL CASO SI LA CONEXION A INTERNET DEJA DE EXISTIR, SE SALDRA DE LA APLICACIÓN

@@ -43,25 +43,28 @@ public class SimpleFactory {
         }
     }
     
-    public static void constructorObjetosVariables(int x, String fullName, String materia) {
+    public static void constructorObjetosVariables(int x, String fullName, String materia, String seccion) {
         //AQUI SE DETERMINA QUE OBJETO SE CONTRUIRÁ DEPENDIENDO DEL VALOR DE X
 
         switch (x) {
             case 1: {
-                new menú(fullName, materia).setVisible(true);
+                new menúGuia(fullName, materia, seccion).setVisible(true);
                 break;
             }
             case 2: {
-                new matricula(fullName, materia).setVisible(true);
+                new matricula(fullName, materia, seccion).setVisible(true);
                 break;
             }
             case 3: {
+                new menúNormal(fullName, materia, seccion).setVisible(true);
                 break;
             }
             case 4: {
+                new ingresonotas(fullName, materia, seccion).setVisible(true);
                 break;
             }
             case 5: {
+                new modify(fullName, materia, seccion).setVisible(true);
                 break;
             }
             case 6: {

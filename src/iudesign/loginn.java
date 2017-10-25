@@ -7,6 +7,7 @@ package iudesign;
 
 import Clases.SimpleFactory;
 import Clases.conectarBD;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.util.Set;
@@ -18,7 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class loginn extends javax.swing.JFrame {
 
-    public String fullName, usuarioBD, materia;
+    public String fullName, usuarioBD, materia, seccion;
 
     /**
      * Creates new form loginn
@@ -26,6 +27,8 @@ public class loginn extends javax.swing.JFrame {
     public loginn() {
         initComponents();
         setLocationRelativeTo(null);
+        Color color = new Color(0, 153, 153, 100);
+        jPanel1.setBackground(color);
     }
 
     private void log_in() {
@@ -46,17 +49,29 @@ public class loginn extends javax.swing.JFrame {
                     fullName = con.fullname;
                     usuarioBD = con.usuarioBD;
                     materia = con.materia;
-
-                    //SE OCULTA EL LOGIN
-                    this.setVisible(false);
+                    seccion = con.seccion;
+                    if (seccion == null) { //Si no es guia se abre el menu normal
+                        //SE OCULTA EL LOGIN
+                        this.setVisible(false);
 //                    SE ABRE EL MENÚ
-                    SimpleFactory simpleFactory = new SimpleFactory();
-                    simpleFactory.constructorObjetosVariables(1, fullName, materia);
-                    simpleFactory = null;
+                        SimpleFactory simpleFactory = new SimpleFactory();
+                        simpleFactory.constructorObjetosVariables(3, fullName, materia, seccion);
+                        simpleFactory = null;
 //                    new menú(fullName, materia).setVisible(true);
-                    //SE CIERRA EL Login
-                    this.dispose();
+                        //SE CIERRA EL Login
+                        this.dispose();
+                    } else {//Si es guia se abre un menu especial
 
+                        //SE OCULTA EL LOGIN
+                        this.setVisible(false);
+//                    SE ABRE EL MENÚ
+                        SimpleFactory simpleFactory = new SimpleFactory();
+                        simpleFactory.constructorObjetosVariables(1, fullName, materia, seccion);
+                        simpleFactory = null;
+//                    new menú(fullName, materia).setVisible(true);
+                        //SE CIERRA EL Login
+                        this.dispose();
+                    }
                 } else {
                     //JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña incorrectos y/o no existe.");
                     JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña incorrectos y/o no existe.", "Información", 0);
@@ -136,30 +151,25 @@ public class loginn extends javax.swing.JFrame {
                 jPanel1MouseReleased(evt);
             }
         });
-        jPanel1.setLayout(null);
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/42509.png"))); // NOI18N
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(180, 290, 128, 138);
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, -1, 138));
 
         jSeparator1.setForeground(new java.awt.Color(240, 240, 240));
-        jPanel1.add(jSeparator1);
-        jSeparator1.setBounds(80, 460, 200, 16);
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 460, 200, 16));
 
         jSeparator2.setForeground(new java.awt.Color(240, 240, 240));
-        jPanel1.add(jSeparator2);
-        jSeparator2.setBounds(40, 440, 280, 10);
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, 280, 10));
 
         jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(240, 240, 240));
         jLabel7.setText("Complejo Educativo Confederación Suiza");
-        jPanel1.add(jLabel7);
-        jLabel7.setBounds(35, 520, 290, 19);
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 520, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/27473.png"))); // NOI18N
         jLabel1.setText("jLabel1");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(0, 180, 222, 242);
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 222, 242));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 720));
 
@@ -313,7 +323,7 @@ public class loginn extends javax.swing.JFrame {
                     options,
                     options[0]);
             if (n == JOptionPane.YES_OPTION) {
-                
+
                 String res = bd.mostrarDisp(bd.MaestroGuia());
                 if (res.equals("")) {
                     JOptionPane.showMessageDialog(null, "Todos los años tienen "
@@ -322,7 +332,7 @@ public class loginn extends javax.swing.JFrame {
                             + "que va a desarrolar.");
                     simpleFactory.constructorObjetos(3); //Registrarse
                     this.dispose();
-                    
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Los siguientes años están "
                             + "disponibles para usted:\n\n" + res

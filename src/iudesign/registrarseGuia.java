@@ -22,7 +22,8 @@ public class registrarseGuia extends javax.swing.JFrame {
     /**
      * Creates new form registrarse
      */
-    private static String nombre, apellido, correo, correoVerificar, contraseña, contraseñaVerificar, fullName, materia;
+    private static String nombre, apellido, correo,
+            correoVerificar, contraseña, contraseñaVerificar, fullName, materia, seccion;
 
     public registrarseGuia() {
         initComponents();
@@ -267,7 +268,7 @@ public class registrarseGuia extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jPanel1);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 450, 430));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 450, 430));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Go Back_32px.png"))); // NOI18N
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -303,7 +304,7 @@ public class registrarseGuia extends javax.swing.JFrame {
                 btnRegistrarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 650, 102, 40));
+        jPanel2.add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 650, 200, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/spinner.gif"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -368,50 +369,55 @@ public class registrarseGuia extends javax.swing.JFrame {
         //SI LA CONEXION A INTERNET ESTA BIEN, ENTONCES SE PREOCEDE A GUARDAR EL NUEVO MAESTRO.
         ComprobarConexionInternet i = new ComprobarConexionInternet();
         if (i.comprobarConexion()) {
-            boolean nombrebol, apellidobol, correobol, correoConfirm, contra, contraConfirm;
-            nombrebol = apellidobol = correobol = correoConfirm = contra = contraConfirm = false;
+            boolean nombrebol, apellidobol, correobol, correoConfirm, contra, contraConfirm, materiabol, seccionbol;
+            nombrebol = apellidobol = correobol = correoConfirm = contra = contraConfirm = materiabol = seccionbol = false;
             String campos = "";
 
             //EN PRIMERA INSTANCIA, SE COMPRUEBA SI TODOS LOS CAMPOS ESTAN VACIOS
             if (!(txtNombre.getText().isEmpty()) && !(txtApellido.getText().isEmpty())
                     && !(txtPassword.getText().isEmpty()) && !(txtCorreo.getText().isEmpty())
                     && !(txtCorreoConfirm.getText().isEmpty()) && !(txtPasswordConfirm.getText().isEmpty())) {
-                //SI NO ESTAN VACIOS, LAS VARIABLES SE ENVIAN
-                nombre = (txtNombre.getText());
-                apellido = (txtApellido.getText());
-                correo = (txtCorreo.getText());
-                correoVerificar = (txtCorreoConfirm.getText());
-                contraseña = (txtPassword.getText());
-                contraseñaVerificar = (txtPasswordConfirm.getText());
-                fullName = nombre + " " + apellido;
-                materia = "asdasd";
+                if (cbxYear.getSelectedIndex() != 0 && cbxMateria.getSelectedItem().toString() != "Elija una materia") {
+                    //SI NO ESTAN VACIOS, LAS VARIABLES SE ENVIAN
+                    nombre = (txtNombre.getText());
+                    apellido = (txtApellido.getText());
+                    correo = (txtCorreo.getText());
+                    correoVerificar = (txtCorreoConfirm.getText());
+                    contraseña = (txtPassword.getText());
+                    contraseñaVerificar = (txtPasswordConfirm.getText());
+                    fullName = nombre + " " + apellido;
+                    materia = cbxMateria.getSelectedItem().toString();
+                    seccion = cbxYear.getSelectedItem().toString();
 
-                //Aqui se ingresa el nuevo maestro a la BD Online
-                if (correo.equalsIgnoreCase(correoVerificar)) {
-                    if (contraseña.equals(contraseñaVerificar)) {
-                        //Creando una instancia de la clase conectarBD para la inserción
-                        conectarBD bd = new conectarBD();
+                    //Aqui se ingresa el nuevo maestro a la BD Online
+                    if (correo.equalsIgnoreCase(correoVerificar)) {
+                        if (contraseña.equals(contraseñaVerificar)) {
+                            //Creando una instancia de la clase conectarBD para la inserción
+                            conectarBD bd = new conectarBD();
 
-                        //SIMPLE FACTORY
-                        //Abrir el menú una vez que se ha registrado en la BD
-                        if (bd.RegistrarMaestro(correo, nombre, apellido, contraseña, materia)) {
-                            JOptionPane.showMessageDialog(this, "Felicidades " + fullName
-                                    + "\nse ha registrado satisfactoriamente en el sistema"
-                                    + "\nen seguida iniciará sesión automáticamente", "Registro completo", 1);
-                            SimpleFactory simpleFactory = new SimpleFactory();
-                            simpleFactory.constructorObjetosVariables(1, fullName, correo);
-                            simpleFactory = null;
-                            //Cerrar REGISTRAR
-                            this.dispose();
+                            //SIMPLE FACTORY
+                            //Abrir el menú una vez que se ha registrado en la BD
+                            if (bd.RegistrarMaestro(correo, nombre, apellido, contraseña, materia, seccion)) {
+                                JOptionPane.showMessageDialog(this, "Felicidades " + fullName
+                                        + "\nse ha registrado satisfactoriamente en el sistema"
+                                        + "\nen seguida iniciará sesión automáticamente", "Registro completo", 1);
+                                SimpleFactory simpleFactory = new SimpleFactory();
+                                simpleFactory.constructorObjetosVariables(1, fullName, materia, seccion);
+                                simpleFactory = null;
+                                //Cerrar REGISTRAR
+                                this.dispose();
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Algo salió mal,"
+                                        + " revise su conexión a internet y vuelva a interntarlo", "Información", 0);
+                            }
                         } else {
-                            JOptionPane.showMessageDialog(this, "Algo salió mal,"
-                                    + " revise su conexión a internet y vuelva a interntarlo", "Información", 0);
+                            JOptionPane.showMessageDialog(this, "Los campos de contraseña no coinciden", "Información", 0);
                         }
                     } else {
-                        JOptionPane.showMessageDialog(this, "Los campos de contraseña no coinciden", "Información", 0);
+                        JOptionPane.showMessageDialog(this, "Los campos de correo no coinciden", "Información", 0);
                     }
-                } else {
-                    JOptionPane.showMessageDialog(this, "Los campos de correo no coinciden", "Información", 0);
+                }else{
+                    JOptionPane.showMessageDialog(this, "Le falta elegir de la lista desplegable de seccion o materia", "Información", 0);
                 }
 
             } else {
@@ -440,12 +446,24 @@ public class registrarseGuia extends javax.swing.JFrame {
                     contraConfirm = true;
                 }
 
+                if (cbxYear.getSelectedItem().toString().equalsIgnoreCase("Elija una sección")) {
+                    seccionbol = true;
+                }
+
+                if (cbxMateria.getSelectedItem().toString().equalsIgnoreCase("Elija una sección")) {
+                    materiabol = true;
+                }
+                if (cbxMateria.getSelectedItem().toString().equalsIgnoreCase("Elija una materia")) {
+                    materiabol = true;
+                }
+
                 //MOSTRAR UN MENSAJE SOBRE QUE CAMPOS FALTAN
                 if (nombrebol == true || apellidobol == true || correobol == true
-                        || correoConfirm == true || contra == true || contraConfirm == true) {
+                        || correoConfirm == true || contra == true || contraConfirm == true || seccionbol == true
+                        || materiabol == true) {
                     //Logic
                     String nombrecad = "", apellidocad = "", correocad = "",
-                            correoConfirmcad = "", contracad = "", contraConfirmcad = "";
+                            correoConfirmcad = "", contracad = "", contraConfirmcad = "", seccioncad = "", materiacad = "";
                     if (nombrebol) {
                         nombrecad += "Nombre\n";
                     }
@@ -464,8 +482,15 @@ public class registrarseGuia extends javax.swing.JFrame {
                     if (contraConfirm) {
                         contraConfirmcad += "Confirmar contraseña\n";
                     }
+                    if (seccionbol) {
+                        seccioncad += "Seccion (Combobox)\n";
+                    }
 
-                    campos += nombrecad + "\n" + apellidocad + "\n" + correocad + "\n" + correoConfirmcad + "\n" + contracad + "\n" + contraConfirmcad;
+                    if (materiabol) {
+                        materiacad += "Materia (Combobox)\n";
+                    }
+
+                    campos += nombrecad + apellidocad + correocad + correoConfirmcad + contracad + contraConfirmcad + seccioncad + materiacad;
                     JOptionPane.showMessageDialog(this, "Los siguientes campos están vacíos.\n" + campos + "\nPor favor, complete el formulario.", "Información", 0);
                 }
             }
@@ -587,7 +612,7 @@ public class registrarseGuia extends javax.swing.JFrame {
     private void cbxYearItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxYearItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             if (cbxYear.getSelectedIndex() == 0) {
-                String[] selecM = new String[1]; 
+                String[] selecM = new String[1];
                 selecM[0] = "Primero elija sección";
                 cbxMateria.setModel(new DefaultComboBoxModel(selecM));
             } else {
@@ -636,7 +661,7 @@ public class registrarseGuia extends javax.swing.JFrame {
 
     private void txtCorreoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoKeyTyped
         // TODO add your handling code here:
-       if ((txtCorreo.getText().length() < 50)) {
+        if ((txtCorreo.getText().length() < 50)) {
             char C = evt.getKeyChar();
             if (((int) evt.getKeyChar() >= 32 && (int) evt.getKeyChar() <= 44
                     || (int) evt.getKeyChar() >= 58 && (int) evt.getKeyChar() <= 63
@@ -679,8 +704,8 @@ public class registrarseGuia extends javax.swing.JFrame {
     private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
         // TODO add your handling code here:
         if ((txtPassword.getText().length() < 20)) {
-            
-        }else{
+
+        } else {
             getToolkit().beep();
             evt.consume();
             JOptionPane.showMessageDialog(this, "Ha superado la longitud del dato esperado", "Dato erróneo", 0);
@@ -690,8 +715,8 @@ public class registrarseGuia extends javax.swing.JFrame {
     private void txtPasswordConfirmKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordConfirmKeyTyped
         // TODO add your handling code here:
         if ((txtPasswordConfirm.getText().length() < 20)) {
-            
-        }else{
+
+        } else {
             getToolkit().beep();
             evt.consume();
             JOptionPane.showMessageDialog(this, "Ha superado la longitud del dato esperado", "Dato erróneo", 0);
