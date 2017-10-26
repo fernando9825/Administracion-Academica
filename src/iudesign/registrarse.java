@@ -27,10 +27,12 @@ public class registrarse extends javax.swing.JFrame {
     public registrarse() {
         initComponents();
         setLocationRelativeTo(null);
+//        conectarBD bd = new conectarBD();
+//        JOptionPane.showMessageDialog(this, bd.mostrarDisp(bd.getMateria("Técnico")));
         ComprobarConexionInternet ie = new ComprobarConexionInternet();
         if (ie.comprobarConexion()) {
-            conectarBD bd = new conectarBD();
-            this.cbxMateria.setModel(new DefaultComboBoxModel(bd.getMateria("técnico")));
+            conectarBD bds= new conectarBD();
+            this.cbxMateria.setModel(new DefaultComboBoxModel(bds.getMateria("técnico")));
         } else {
             JOptionPane.showMessageDialog(this, "¡No he detectado internet!\n¡recomiendo "
                     + "verificar la conexion a internet y/o reiniciar el sistema!");
@@ -629,7 +631,7 @@ public class registrarse extends javax.swing.JFrame {
 //        || (int) evt.getKeyChar() >= 58 && (int) evt.getKeyChar() <= 63
 //        || (int) evt.getKeyChar() >= 91 && (int) evt.getKeyChar() <= 94
 //        || (int) evt.getKeyChar() == 96))
-        if ((txtCorreoConfirm.getText().length() < 50)) {
+        if ((txtCorreo.getText().length() < 50)) {
             char C = evt.getKeyChar();
             if (((int) evt.getKeyChar() >= 32 && (int) evt.getKeyChar() <= 44
                     || (int) evt.getKeyChar() >= 58 && (int) evt.getKeyChar() <= 63

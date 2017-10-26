@@ -17,8 +17,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -29,6 +33,8 @@ public class conectarBD {
     Connection con;
     Statement stm;
     Statement st;
+
+    // jdbc:mysql://mysql5005.smarterasp.net/db_a2b143_fer9825?user=a2b143_fer9825&password=982505va
     //LOCALHOST//private static String driver = "jdbc:mysql://localhost/admin_academica?user=root&password=";
     private static String servidor = "mysql5005.smarterasp.net";
     private static String baseDeDatos = "db_a2b143_fer9825";
@@ -103,8 +109,43 @@ public class conectarBD {
             try {
                 // the mysql insert statement
                 String query = "INSERT INTO maestros(correo, nombre, apellido, password, materia, seccion) VALUES ('" + correo + "', '" + nombre + "', '" + apellido + "', '" + passWord + "', '" + materia + "', '" + seccion + "')";
-
                 st.executeUpdate(query);
+
+                //Parte que se encarga de modificar el valor de las tablas maestrodisp y materiadisp
+                //Quitando disponibiblidad de materia.
+                query = "UPDATE materias_disp SET " + materia + " = 0  WHERE 1 ";
+                st.executeUpdate(query);
+
+                //Quitando disponibiblidad de seccion.
+                query = "UPDATE maestro_guia SET " + maestroQuery(seccion) + " = 0  WHERE 1 ";
+                st.executeUpdate(query);
+
+                //
+                //Cerrar la conexion
+                cerrarConexion();
+                ingresado = true;
+            } catch (SQLException e) {
+                System.err.println("Ha ocurrido un problema, lo sentimos, vuelva a intentarlo");
+                System.err.println(e.getMessage());
+                ingresado = false;
+            }
+        }
+        return ingresado;
+    }
+
+    public boolean RegistrarAlumno(String carnet, String nombre, String apellido,
+            String edad, String direccion, String sexo, String correo, String seccion,
+            String passWord) {
+        boolean ingresado = false;
+        if (abrirConexion()) {
+            try {
+                
+                 
+                // the mysql insert statement
+                String query = "INSERT INTO alumnos(carnet, nombre, apellido, edad, direccion, sexo, correo, seccion, password) VALUES ('" + carnet + "', '" + nombre + "', '" + apellido + "', '" + edad + "', '" + direccion + "', '" + sexo + "', '" + correo + "', '" + seccion + "', '" + passWord + "')";
+                st.executeUpdate(query);
+
+                //
                 //Cerrar la conexion
                 cerrarConexion();
                 ingresado = true;
@@ -132,9 +173,9 @@ public class conectarBD {
                 while (result.next()) {
                     for (int i = 1; i < AñoOpcionSeccionDisp.length; i++) {
                         AñoOpcionSeccionDisp[i] = result.getInt((i));
-                        
+
                     }
-                    
+
                 }
             } catch (SQLException e) {
                 System.out.println(e);
@@ -226,22 +267,22 @@ public class conectarBD {
 
             }
         }
-        return AñoOpcionSeccionDispCadena;
+        return quitarNull(AñoOpcionSeccionDispCadena);
     }
 
     public String[] getMateria(String opcion) {
 
-        String query = "SELECT * FROM materias_disp";
-        String[] materia = new String[13];
+        String query = "SELECT * FROM materias_disp where 1";
+        String[] materia = new String[14];
 
-        int[] comprobar = new int[13];
+        int[] comprobar = new int[14];
 
         if (abrirConexion()) {
             try {
                 ResultSet result = stm.executeQuery(query);
                 while (result.next()) {
-                    for (int i = 0; i < 12; i++) {
-                        comprobar[i] = result.getInt((i + 1));
+                    for (int i = 1; i < materia.length; i++) {
+                        comprobar[i] = result.getInt(i);
                     }
                 }
             } catch (SQLException e) {
@@ -249,176 +290,264 @@ public class conectarBD {
             cerrarConexion();
         }
 
+        materia[0] = "Elija una materia";
         if (opcion.equalsIgnoreCase("general")) {
-            for (int i = 0; i < materia.length; i++) {
-                switch (i) {
-                    case 0: {
-                        if (comprobar[i] == 1) {
-                            materia[i] = "Elija una materia";
-                        }
-                        break;
+            for (int i = 1; i < materia.length; i++) {
+                if (i == 1) {
+                    if (comprobar[i] == 1) {
+                        materia[i] = "Matemáticas";
                     }
-                    case 1: {
-                        if (comprobar[i] == 1) {
-                            materia[i] = "Matemáticas";
-                        }
-                        break;
+                } else if (i == 2) {
+                    if (comprobar[i] == 1) {
+                        materia[i] = "Sociales";
                     }
-                    case 2: {
-                        if (comprobar[i] == 1) {
-                            materia[i] = "Sociales";
-                        }
-                        break;
+                } else if (i == 3) {
+                    if (comprobar[i] == 1) {
+                        materia[i] = "Ciencia";
                     }
-                    case 3: {
-                        if (comprobar[i] == 1) {
-                            materia[i] = "Ciencia";
-                        }
-                        break;
+                } else if (i == 4) {
+                    if (comprobar[i] == 1) {
+                        materia[i] = "Lenguaje";
                     }
-                    case 4: {
-                        if (comprobar[i] == 1) {
-                            materia[i] = "Lenguaje";
-                        }
-                        break;
+                } else if (i == 5) {
+                    if (comprobar[i] == 1) {
+                        materia[i] = "Ingles";
                     }
-                    case 5: {
-                        if (comprobar[i] == 1) {
-                            materia[i] = "Ingles";
-                        }
-                        break;
+                } else if (i == 6) {
+                    if (comprobar[i] == 1) {
+                        materia[i] = "opv";
                     }
-                    case 6: {
-                        if (comprobar[i] == 1) {
-                            materia[i] = "opv";
-                        }
-                        break;
+                } else if (i == 7) {
+                    if (comprobar[i] == 1) {
+                        materia[i] = "Seminario";
                     }
-                    case 7: {
-                        if (comprobar[i] == 1) {
-                            materia[i] = "Seminario";
-                        }
-                        break;
+                } else if (i == 8) {
+                    if (comprobar[i] == 1) {
+                        materia[i] = "Informática";
                     }
-                    case 8: {
-                        if (comprobar[i] == 1) {
-                            materia[i] = "Informática";
-                        }
-                        break;
-                    }
-                    case 9: {
-                        if (comprobar[i] == 1) {
-                            materia[i] = "Tecnología";
-                        }
-                        break;
+                } else if (i == 9) {
+                    if (comprobar[i] == 1) {
+                        materia[i] = "Tecnología";
                     }
                 }
             }
         }
         if (opcion.equalsIgnoreCase("técnico")) {
-            for (int i = 0; i < materia.length; i++) {
-                switch (i) {
+            for (int i = 1; i < materia.length; i++) {
+                if (comprobar[i] == 1) {
 
-                    case 0: {
-                        if (comprobar[i] == 1) {
-                            materia[i] = "Elija una materia";
-                        }
-                        break;
-                    }
-                    case 1: {
+                    System.out.println("Eran unos");
+                    System.out.println(comprobar[i]);
+                    if (i == 1) {
                         if (comprobar[i] == 1) {
                             materia[i] = "Matemáticas";
                         }
-                        break;
-                    }
-                    case 2: {
+                    } else if (i == 2) {
                         if (comprobar[i] == 1) {
                             materia[i] = "Sociales";
                         }
-                        break;
-                    }
-                    case 3: {
+                    } else if (i == 3) {
                         if (comprobar[i] == 1) {
                             materia[i] = "Ciencia";
                         }
-                        break;
-                    }
-                    case 4: {
+                    } else if (i == 4) {
                         if (comprobar[i] == 1) {
                             materia[i] = "Lenguaje";
                         }
-                        break;
-                    }
-                    case 5: {
+                    } else if (i == 5) {
                         if (comprobar[i] == 1) {
                             materia[i] = "Ingles";
                         }
-                        break;
-                    }
-                    case 6: {
+                    } else if (i == 6) {
                         if (comprobar[i] == 1) {
                             materia[i] = "opv";
                         }
-                        break;
-                    }
-                    case 7: {
+                    } else if (i == 7) {
                         if (comprobar[i] == 1) {
                             materia[i] = "Seminario";
                         }
-                        break;
-                    }
-                    case 8: {
+                    } else if (i == 8) {
                         if (comprobar[i] == 1) {
                             materia[i] = "Informática";
                         }
-                        break;
-                    }
-                    case 9: {
+                    } else if (i == 9) {
                         if (comprobar[i] == 1) {
                             materia[i] = "Tecnología";
                         }
-                        break;
-                    }
-                    case 10: {
+                    } else if (i == 10) {
                         if (comprobar[i] == 1) {
                             materia[i] = "Matemáticas_financieras";
                         }
-                        break;
-                    }
-                    case 11: {
+                    } else if (i == 11) {
                         if (comprobar[i] == 1) {
                             materia[i] = "Lab_creatividad";
                         }
-                        break;
                     }
-                    case 12: {
+                    if (i == 12) {
                         if (comprobar[i] == 1) {
                             materia[i] = "Prácticas_contables";
                         }
-                        break;
                     }
-                }
-            }
-        }
-
-        int x = 0;
-        for (int i = 0; i < materia.length; i++) {
-            if (materia[i] != null) {
-                x++;
-            }
-        }
-        String[] materiaCorregido = new String[x];
-        for (int i = 0; i < x; i++) {
-            for (int j = i; j < materia.length; j++) {
-                if (materia[j] != null) {
-                    materiaCorregido[i] = materia[j];
-                    break;
+                } else {
+                    if (i == 12) {
+                        if (comprobar[i] == 0) {
+                            materia[i] = "Prácticas_contables";
+                        }
+                    }
+                    System.out.println("Eran ceros");
+                    System.out.println(comprobar[i]);
                 }
 
             }
         }
 
-        return materiaCorregido;
+//                switch (i) {
+//                    case 0: {
+//                            materia[i] = "Elija una materia";
+//                        
+//                        break;
+//                    }
+//                    case 1: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "Matemáticas";
+//                        }
+//                        break;
+//                    }
+//                    case 2: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "Sociales";
+//                        }
+//                        break;
+//                    }
+//                    case 3: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "Ciencia";
+//                        }
+//                        break;
+//                    }
+//                    case 4: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "Lenguaje";
+//                        }
+//                        break;
+//                    }
+//                    case 5: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "Ingles";
+//                        }
+//                        break;
+//                    }
+//                    case 6: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "opv";
+//                        }
+//                        break;
+//                    }
+//                    case 7: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "Seminario";
+//                        }
+//                        break;
+//                    }
+//                    case 8: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "Informática";
+//                        }
+//                        break;
+//                    }
+//                    case 9: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "Tecnología";
+//                        }
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+//        if (opcion.equalsIgnoreCase("técnico")) {
+//            for (int i = 0; i < materia.length; i++) {
+//                switch (i) {
+//
+//                    case 0: {
+//                        materia[i] = "Elija una materia";
+//                        break;
+//                    }
+//                    case 1: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "Matemáticas";
+//                        }
+//                        break;
+//                    }
+//                    case 2: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "Sociales";
+//                        }
+//                        break;
+//                    }
+//                    case 3: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "Ciencia";
+//                        }
+//                        break;
+//                    }
+//                    case 4: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "Lenguaje";
+//                        }
+//                        break;
+//                    }
+//                    case 5: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "Ingles";
+//                        }
+//                        break;
+//                    }
+//                    case 6: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "opv";
+//                        }
+//                        break;
+//                    }
+//                    case 7: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "Seminario";
+//                        }
+//                        break;
+//                    }
+//                    case 8: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "Informática";
+//                        }
+//                        break;
+//                    }
+//                    case 9: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "Tecnología";
+//                        }
+//                        break;
+//                    }
+//                    case 10: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "Matemáticas_financieras";
+//                        }
+//                        break;
+//                    }
+//                    case 11: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "Lab_creatividad";
+//                        }
+//                        break;
+//                    }
+//                    case 12: {
+//                        if (comprobar[i] == 1) {
+//                            materia[i] = "Prácticas_contables";
+//                        }
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+        return quitarNull(materia);
     }
 
     public String mostrarDisp(String[] arreglo) {
@@ -431,4 +560,261 @@ public class conectarBD {
         return cadena;
     }
 
+    public String maestroQuery(String maestro) {
+        String cadena = "";
+        if (maestro.equalsIgnoreCase("1° General A")) {
+            cadena = "pga";
+        } else if (maestro.equalsIgnoreCase("1° General B")) {
+            cadena = "pgb";
+        } else if (maestro.equalsIgnoreCase("1° General C")) {
+            cadena = "pgc";
+        } else if (maestro.equalsIgnoreCase("2° General A")) {
+            cadena = "sga";
+        } else if (maestro.equalsIgnoreCase("2° General B")) {
+            cadena = "sgb";
+        } else if (maestro.equalsIgnoreCase("2° General C")) {
+            cadena = "sgc";
+        } else if (maestro.equalsIgnoreCase("1° Técnico vocacional A")) {
+            cadena = "ptva";
+        } else if (maestro.equalsIgnoreCase("2° Técnico vocacional A")) {
+            cadena = "stva";
+        } else if(maestro.equalsIgnoreCase("3° Técnico vocacional A")) {
+            cadena = "ttva";
+        }
+        return cadena;
+    }
+
+    public String[] quitarNull(String[] a) {
+        ArrayList<String> removedNull = new ArrayList<String>();
+        for (String str : a) {
+            if (str != null) {
+                removedNull.add(str);
+            }
+        }
+        return removedNull.toArray(new String[0]);
+    }
+
+    public void llenarTabla(JTable table, String Query) {
+        try {
+            abrirConexion();
+            ResultSet rs = st.executeQuery(Query);
+
+            //To remove previously added rows
+            while (table.getRowCount() > 0) {
+                ((DefaultTableModel) table.getModel()).removeRow(0);
+            }
+            int columns = rs.getMetaData().getColumnCount();
+            while (rs.next()) {
+                Object[] row = new Object[columns];
+                for (int i = 1; i <= columns; i++) {
+                    row[i - 1] = rs.getObject(i);
+                }
+                ((DefaultTableModel) table.getModel()).insertRow(rs.getRow() - 1, row);
+            }
+
+            rs.close();
+            st = null;
+            con = null;
+        } catch (SQLException e) {
+        }
+    }
+
+   public String generadorCarnet(String apellido, String seccion){
+       String resultado = "";
+       int numero = 0;
+       String seccioncad = maestroQuery(seccion.toLowerCase().trim());
+       try{
+           //Determinando el numero de alumno
+           
+           if(abrirConexion()){
+               System.out.println("conexion abierta");
+           String Query = "SELECT COUNT(*) AS total FROM alumnos";
+           ResultSet result = stm.executeQuery(Query);
+           if(result.next()){
+               
+               numero = result.getInt("total");
+           }
+               
+           numero += 1;
+           System.out.println(numero);
+        String sPalabra = "";
+        
+        int x = 0;
+        StringTokenizer stPalabras = new StringTokenizer(apellido);
+        while (stPalabras.hasMoreTokens()) {
+            
+                sPalabra = stPalabras.nextToken();
+                resultado += sPalabra.substring(0, 1).toUpperCase();
+                System.out.println(sPalabra.substring(0, 1));
+            if(x == 1){
+                break;
+            }
+            x++;
+        }
+           }   else{
+                System.out.println("no se abrio la conexion");
+                }
+        
+        resultado = resultado + "17" + seccioncad.toUpperCase() + numero;
+        System.out.println(resultado);
+        }catch(Exception e){
+            System.out.println("Entre aqui");
+            System.out.println(e);
+        }
+       resultado = resultado.toUpperCase();
+        return resultado;
+   }
+   
+   public String generadorPassword(){
+       String pass = "";
+        int numero;
+        for (int i = 0; i < 5; i++) {
+            numero = (int) (Math.random() * 35) + 1;
+            switch (numero) {
+                case 1: {
+                    pass += "a";
+                    break;
+                }
+                case 2: {
+                    pass += "b";
+                    break;
+                }
+                case 3: {
+                    pass += "c";
+                    break;
+                }
+                case 4: {
+                    pass += "d";
+                    break;
+                }
+                case 5: {
+                    pass += "f";
+                    break;
+                }
+                case 6: {
+                    pass += "g";
+                    break;
+                }
+                case 7: {
+                    pass += "h";
+                    break;
+                }
+                case 8: {
+                    pass += "i";
+                    break;
+                }
+                case 9: {
+                    pass += "j";
+                    break;
+                }
+
+                case 10: {
+                    pass += "k";
+                    break;
+                }
+                case 11: {
+                    pass += "l";
+                    break;
+                }
+                case 12: {
+                    pass += "m";
+                    break;
+                }
+                case 13: {
+                    pass += "n";
+                    break;
+                }
+                case 14: {
+                    pass += "o";
+                    break;
+                }
+                case 15: {
+                    pass += "p";
+                    break;
+                }
+                case 16: {
+                    pass += "q";
+                    break;
+                }
+                case 17: {
+                    pass += "r";
+                    break;
+                }
+                case 18: {
+                    pass += "s";
+                    break;
+                }
+                case 19: {
+                    pass += "t";
+                    break;
+                }
+                case 20: {
+                    pass += "u";
+                    break;
+                }
+                case 21: {
+                    pass += "v";
+                    break;
+                }
+                case 22: {
+                    pass += "w";
+                    break;
+                }
+                case 23: {
+                    pass += "x";
+                    break;
+                }
+                case 24: {
+                    pass += "y";
+                    break;
+                }
+                case 25: {
+                    pass += "z";
+                    break;
+                }
+                case 26: {
+                    pass += "0";
+                    break;
+                }
+                case 27: {
+                    pass += "1";
+                    break;
+                }
+                case 28: {
+                    pass += "2";
+                    break;
+                }
+                case 29: {
+                    pass += "3";
+                    break;
+                }
+                case 30: {
+                    pass += "4";
+                    break;
+                }
+                case 31: {
+                    pass += "5";
+                    break;
+                }
+                case 32: {
+                    pass += "6";
+                    break;
+                }
+                case 33: {
+                    pass += "7";
+                    break;
+                }
+                case 34: {
+                    pass += "8";
+                    break;
+                }
+                case 35: {
+                    pass += "9";
+                    break;
+                }
+
+            }
+        }
+        return pass;
+   }
 }

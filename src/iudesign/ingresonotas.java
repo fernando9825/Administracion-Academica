@@ -26,6 +26,8 @@ public class ingresonotas extends javax.swing.JFrame {
         this.fullName = fullName;
         this.materia = materia;
         this.seccion = seccion;
+        
+        jLabelNombreProfe.setText(fullName);
     }
 
     /**
@@ -38,7 +40,7 @@ public class ingresonotas extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        jLabelNombreProfe = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -65,7 +67,7 @@ public class ingresonotas extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel4.setText("Nombre del profesor");
+        jLabelNombreProfe.setText("Nombre del profesor");
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_Collaborator_Male_24px_1.png"))); // NOI18N
 
@@ -85,7 +87,7 @@ public class ingresonotas extends javax.swing.JFrame {
                 .addContainerGap(554, Short.MAX_VALUE)
                 .addComponent(jLabel11)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelNombreProfe, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(jLabel12))
         );
@@ -94,7 +96,7 @@ public class ingresonotas extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel11)
-                    .addComponent(jLabel4)
+                    .addComponent(jLabelNombreProfe)
                     .addComponent(jLabel12))
                 .addGap(0, 8, Short.MAX_VALUE))
         );
@@ -376,12 +378,12 @@ public class ingresonotas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private static javax.swing.JLabel jLabelNombreProfe;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

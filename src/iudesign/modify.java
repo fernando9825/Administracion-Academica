@@ -5,6 +5,7 @@
  */
 package iudesign;
 
+import Clases.ComprobarConexionInternet;
 import Clases.SimpleFactory;
 
 /**
@@ -17,13 +18,16 @@ public class modify extends javax.swing.JFrame {
      * Creates new form modify
      */
     private static String fullName, materia, seccion;
+
     public modify(String fullName, String materia, String seccion) {
         initComponents();
-        
+
         //Dandole valor a las variables globales
         this.fullName = fullName;
         this.materia = materia;
         this.seccion = seccion;
+
+        jLabelNombreProfe.setText(fullName);
     }
 
     /**
@@ -42,7 +46,7 @@ public class modify extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        jLabelNombreProfe = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -135,9 +139,9 @@ public class modify extends javax.swing.JFrame {
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 170, 510));
 
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Nombre del profesor");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 136, -1, 20));
+        jLabelNombreProfe.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelNombreProfe.setText("Nombre del profesor");
+        getContentPane().add(jLabelNombreProfe, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 136, -1, 20));
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8_Collaborator_Male_24px_1.png"))); // NOI18N
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 130, 40, 30));
@@ -203,18 +207,22 @@ public class modify extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
-        if(seccion == null){
-             this.dispose();
-        SimpleFactory simpleFactory = new SimpleFactory();
-        simpleFactory.constructorObjetosVariables(3, fullName, materia, seccion);
-        simpleFactory = null;
-        //new menú(fullName, materia).setVisible(true);
-        }else{
-        this.dispose();
-        SimpleFactory simpleFactory = new SimpleFactory();
-        simpleFactory.constructorObjetosVariables(1, fullName, materia, seccion);
-        simpleFactory = null;
-        //new menú(fullName, materia).setVisible(true);
+        //Creando una nueva instancia, un metodo de ella nos permite verificar la conexion a internet
+        ComprobarConexionInternet i = new ComprobarConexionInternet();
+        if (i.comprobarConexion()) {
+            if (seccion == null) {
+                this.dispose();
+                SimpleFactory simpleFactory = new SimpleFactory();
+                simpleFactory.constructorObjetosVariables(3, fullName, materia, seccion);
+                simpleFactory = null;
+                //new menú(fullName, materia).setVisible(true);
+            } else {
+                this.dispose();
+                SimpleFactory simpleFactory = new SimpleFactory();
+                simpleFactory.constructorObjetosVariables(1, fullName, materia, seccion);
+                simpleFactory = null;
+                //new menú(fullName, materia).setVisible(true);
+            }
         }
     }//GEN-LAST:event_jLabel13MouseClicked
 
@@ -229,18 +237,18 @@ public class modify extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-        if(seccion == null){
-             this.dispose();
-        SimpleFactory simpleFactory = new SimpleFactory();
-        simpleFactory.constructorObjetosVariables(3, fullName, materia, seccion);
-        simpleFactory = null;
-        //new menú(fullName, materia).setVisible(true);
-        }else{
-        this.dispose();
-        SimpleFactory simpleFactory = new SimpleFactory();
-        simpleFactory.constructorObjetosVariables(1, fullName, materia, seccion);
-        simpleFactory = null;
-        //new menú(fullName, materia).setVisible(true);
+        if (seccion == null) {
+            this.dispose();
+            SimpleFactory simpleFactory = new SimpleFactory();
+            simpleFactory.constructorObjetosVariables(3, fullName, materia, seccion);
+            simpleFactory = null;
+            //new menú(fullName, materia).setVisible(true);
+        } else {
+            this.dispose();
+            SimpleFactory simpleFactory = new SimpleFactory();
+            simpleFactory.constructorObjetosVariables(1, fullName, materia, seccion);
+            simpleFactory = null;
+            //new menú(fullName, materia).setVisible(true);
         }
     }//GEN-LAST:event_jLabel3MouseClicked
 
@@ -295,7 +303,7 @@ public class modify extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private static javax.swing.JLabel jLabelNombreProfe;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;

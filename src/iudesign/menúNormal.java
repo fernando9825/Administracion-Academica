@@ -328,17 +328,25 @@ public class menúNormal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMinimizarMouseClicked
 
     private void btnIngresarNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarNotasActionPerformed
+         //Creando una nueva instancia, un metodo de ella nos permite verificar la conexion a internet
+        ComprobarConexionInternet i = new ComprobarConexionInternet();
+        if (i.comprobarConexion()) {
         SimpleFactory simpleFactory = new SimpleFactory();
         simpleFactory.constructorObjetosVariables(4, fullName, materia, seccion);
         simpleFactory = null;
         this.dispose();
+        }
     }//GEN-LAST:event_btnIngresarNotasActionPerformed
 
     private void btnModificarNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarNotasActionPerformed
+        //Creando una nueva instancia, un metodo de ella nos permite verificar la conexion a internet
+        ComprobarConexionInternet i = new ComprobarConexionInternet();
+        if (i.comprobarConexion()) {
         SimpleFactory simpleFactory = new SimpleFactory();
         simpleFactory.constructorObjetosVariables(5, fullName, materia, seccion); 
         simpleFactory = null;
         this.dispose();
+        }
     }//GEN-LAST:event_btnModificarNotasActionPerformed
 
     /**

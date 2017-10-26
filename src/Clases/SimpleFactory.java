@@ -52,7 +52,7 @@ public class SimpleFactory {
                 break;
             }
             case 2: {
-                new matricula(fullName, materia, seccion).setVisible(true);
+                new matriculaTabla(fullName, materia, seccion).setVisible(true);
                 break;
             }
             case 3: {
