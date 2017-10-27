@@ -6,6 +6,9 @@
 package Clases;
 
 import iudesign.*;
+import static iudesign.ingresoNotas.fullName;
+import static iudesign.ingresoNotas.materia;
+import static iudesign.ingresoNotas.seccion;
 
 /**
  *
@@ -60,7 +63,7 @@ public class SimpleFactory {
                 break;
             }
             case 4: {
-                new ingresonotas(fullName, materia, seccion).setVisible(true);
+                new ingresoNotas(fullName, materia, seccion).setVisible(true);
                 break;
             }
             case 5: {

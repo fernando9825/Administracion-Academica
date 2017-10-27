@@ -103,6 +103,42 @@ public class conectarBD {
 
     }
 
+    public boolean ingresarNotas(String carnet, String materia, float nota) {
+        boolean registrado = false;
+        float notaRetorno = 0;
+        if (abrirConexion()) {
+            try {
+                System.out.println("conexion abierta");
+
+                //Asignando nota, dependiendo del carnet y materia.
+                String query = "UPDATE notas set " + materia + " = " + nota + "  WHERE carnet= '" + carnet + "'";
+                st.executeUpdate(query);
+
+                //
+                
+                //Verificando que se ingreso
+                query = "SELECT * FROM notas WHERE carnet = '" + carnet + "'";
+                ResultSet result = stm.executeQuery(query);
+                if (result.next()) {
+                    notaRetorno = result.getFloat(materia);
+                }
+                
+                if(notaRetorno == nota){
+                    registrado = true;
+                }
+                //
+                //Cerrar la conexion
+                cerrarConexion();
+            } catch (SQLException e) {
+                System.err.println("Ha ocurrido un problema, lo sentimos, vuelva a intentarlo");
+                System.err.println(e.getMessage());
+                registrado = false;
+            }
+        }
+
+        return registrado;
+    }
+
     public boolean RegistrarMaestro(String correo, String nombre, String apellido, String passWord, String materia, String seccion) {
         boolean ingresado = false;
         if (abrirConexion()) {
@@ -132,6 +168,31 @@ public class conectarBD {
         }
         return ingresado;
     }
+    
+    public boolean RegistrarMaestroNormal(String correo, String nombre, String apellido, String passWord, String materia, String seccion) {
+        boolean ingresado = false;
+        if (abrirConexion()) {
+            try {
+                // the mysql insert statement
+                String query = "INSERT INTO maestros(correo, nombre, apellido, password, materia, seccion) VALUES ('" + correo + "', '" + nombre + "', '" + apellido + "', '" + passWord + "', '" + materia + "', '" + seccion + "')";
+                st.executeUpdate(query);
+
+                //Parte que se encarga de modificar el valor de las tablas materiadisp
+                //Quitando disponibiblidad de materia.
+                query = "UPDATE materias_disp SET " + materia + " = 0  WHERE 1 ";
+                st.executeUpdate(query);
+                //
+                //Cerrar la conexion
+                cerrarConexion();
+                ingresado = true;
+            } catch (SQLException e) {
+                System.err.println("Ha ocurrido un problema, lo sentimos, vuelva a intentarlo");
+                System.err.println(e.getMessage());
+                ingresado = false;
+            }
+        }
+        return ingresado;
+    }
 
     public boolean RegistrarAlumno(String carnet, String nombre, String apellido,
             String edad, String direccion, String sexo, String correo, String seccion,
@@ -139,13 +200,14 @@ public class conectarBD {
         boolean ingresado = false;
         if (abrirConexion()) {
             try {
-                
-                 
-                // the mysql insert statement
+
+                // el mysql insert statement
                 String query = "INSERT INTO alumnos(carnet, nombre, apellido, edad, direccion, sexo, correo, seccion, password) VALUES ('" + carnet + "', '" + nombre + "', '" + apellido + "', '" + edad + "', '" + direccion + "', '" + sexo + "', '" + correo + "', '" + seccion + "', '" + passWord + "')";
                 st.executeUpdate(query);
 
                 //
+                query = "INSERT INTO notas(carnet, apellido, seccion) VALUES ('" + carnet + "', '" + apellido + "', '" + seccion + "')";
+                st.executeUpdate(query);
                 //Cerrar la conexion
                 cerrarConexion();
                 ingresado = true;
@@ -578,7 +640,7 @@ public class conectarBD {
             cadena = "ptva";
         } else if (maestro.equalsIgnoreCase("2° Técnico vocacional A")) {
             cadena = "stva";
-        } else if(maestro.equalsIgnoreCase("3° Técnico vocacional A")) {
+        } else if (maestro.equalsIgnoreCase("3° Técnico vocacional A")) {
             cadena = "ttva";
         }
         return cadena;
@@ -619,54 +681,54 @@ public class conectarBD {
         }
     }
 
-   public String generadorCarnet(String apellido, String seccion){
-       String resultado = "";
-       int numero = 0;
-       String seccioncad = maestroQuery(seccion.toLowerCase().trim());
-       try{
-           //Determinando el numero de alumno
-           
-           if(abrirConexion()){
-               System.out.println("conexion abierta");
-           String Query = "SELECT COUNT(*) AS total FROM alumnos";
-           ResultSet result = stm.executeQuery(Query);
-           if(result.next()){
-               
-               numero = result.getInt("total");
-           }
-               
-           numero += 1;
-           System.out.println(numero);
-        String sPalabra = "";
-        
-        int x = 0;
-        StringTokenizer stPalabras = new StringTokenizer(apellido);
-        while (stPalabras.hasMoreTokens()) {
-            
-                sPalabra = stPalabras.nextToken();
-                resultado += sPalabra.substring(0, 1).toUpperCase();
-                System.out.println(sPalabra.substring(0, 1));
-            if(x == 1){
-                break;
-            }
-            x++;
-        }
-           }   else{
-                System.out.println("no se abrio la conexion");
+    public String generadorCarnet(String apellido, String seccion) {
+        String resultado = "";
+        int numero = 0;
+        String seccioncad = seccion.toUpperCase();
+        try {
+            //Determinando el numero de alumno
+
+            if (abrirConexion()) {
+                System.out.println("conexion abierta");
+                String Query = "SELECT COUNT(*) AS total FROM alumnos";
+                ResultSet result = stm.executeQuery(Query);
+                if (result.next()) {
+
+                    numero = result.getInt("total");
                 }
-        
-        resultado = resultado + "17" + seccioncad.toUpperCase() + numero;
-        System.out.println(resultado);
-        }catch(Exception e){
+
+                numero += 1;
+                System.out.println(numero);
+                String sPalabra = "";
+
+                int x = 0;
+                StringTokenizer stPalabras = new StringTokenizer(apellido);
+                while (stPalabras.hasMoreTokens()) {
+
+                    sPalabra = stPalabras.nextToken();
+                    resultado += sPalabra.substring(0, 1).toUpperCase();
+                    System.out.println(sPalabra.substring(0, 1));
+                    if (x == 1) {
+                        break;
+                    }
+                    x++;
+                }
+            } else {
+                System.out.println("no se abrio la conexion");
+            }
+
+            resultado = resultado + "17" + seccioncad.toUpperCase() + numero;
+            System.out.println(resultado);
+        } catch (Exception e) {
             System.out.println("Entre aqui");
             System.out.println(e);
         }
-       resultado = resultado.toUpperCase();
+        resultado = resultado.toUpperCase();
         return resultado;
-   }
-   
-   public String generadorPassword(){
-       String pass = "";
+    }
+
+    public String generadorPassword() {
+        String pass = "";
         int numero;
         for (int i = 0; i < 5; i++) {
             numero = (int) (Math.random() * 35) + 1;
@@ -816,5 +878,5 @@ public class conectarBD {
             }
         }
         return pass;
-   }
+    }
 }

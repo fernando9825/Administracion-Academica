@@ -514,7 +514,7 @@ public class matriculaTabla extends javax.swing.JFrame {
         String correo = (txtCorreo.getText());
         String direccion = (txtDireccion.getText());
         String edad = cbxEdad.getSelectedItem().toString();
-        String carnet = bd.generadorCarnet(apellido, bd.maestroQuery(seccion));
+        String carnet = bd.generadorCarnet(apellido, bd.maestroQuery(seccion.trim()));
         String sexo = (cbxSexo.getSelectedItem().toString());
 
         //SI LA CONEXION A INTERNET ESTA BIEN, ENTONCES SE PREOCEDE A GUARDAR EL NUEVO MAESTRO.

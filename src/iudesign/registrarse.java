@@ -396,7 +396,7 @@ public class registrarse extends javax.swing.JFrame {
 
                             //SIMPLE FACTORY
                             //Abrir el menú una vez que se ha registrado en la BD
-                            if (bd.RegistrarMaestro(correo, nombre, apellido, contraseña, materia, null)) {
+                            if (bd.RegistrarMaestroNormal(correo, nombre, apellido, contraseña, materia, null)) {
                                 JOptionPane.showMessageDialog(this, "Felicidades " + fullName
                                         + "\nse ha registrado satisfactoriamente en el sistema"
                                         + "\nen seguida iniciará sesión automáticamente", "Registro completo", 1);

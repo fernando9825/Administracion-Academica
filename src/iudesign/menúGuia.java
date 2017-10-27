@@ -279,7 +279,7 @@ public class menúGuia extends javax.swing.JFrame {
         JlabelFullName.setForeground(new java.awt.Color(255, 255, 255));
         JlabelFullName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         JlabelFullName.setText("          Usuario");
-        getContentPane().add(JlabelFullName, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 255, 20));
+        getContentPane().add(JlabelFullName, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 255, 20));
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 530, 255, 10));
